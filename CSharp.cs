@@ -24,4 +24,13 @@ internal class CSharp
         }
         return "Error";
     }
+
+    public int BoilEggs(int eggs)
+    {
+        if (eggs <= 0)
+        {
+            return 0;
+        }
+        return (((eggs - 1) / 8) + 1)* 5 ;
+    }
 }
