@@ -14,7 +14,9 @@ public class Program
         Kyu8 cSharp = new Kyu8();
         Kyu6 kyu6 = new Kyu6();
 
-        kyu6.Persistence(12345);
+        Console.WriteLine(kyu6.Persistence(999));
+        Console.WriteLine(kyu6.Persistence(39));
+        Console.WriteLine(kyu6.Persistence(4));
     }
 
     public static void RunCSharp()
