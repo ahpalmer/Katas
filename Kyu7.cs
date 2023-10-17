@@ -14,13 +14,23 @@ internal class Kyu7
         int ccCount = ccList.Count() - 4;
         IEnumerable<char> lastFourList = ccList.TakeLast(4);
         //string answer = lastFourList.Append('#').ToArray().ToString()!;
-        List<char> poundList = new List<char>(new char[ccCount]);
+        List<char> poundList = new List<char>();
         for(int i = 0; i < ccCount; i++)
         {
-            poundList[i] = '#';
+            poundList.Add('#');
         }
         IEnumerable<char> answerList = poundList.Concat(lastFourList);
-        string answer = String.Concat(answerList.TakeWhile(char.IsLetter));
-        return answer;
+        string answerOne = new string(answerList.ToArray());
+        return answerOne;
+
+        //Best answer:
+        //public static string Maskify(string cc)
+        //{
+        //    int len = cc.Length;
+        //    if (len <= 4)
+        //        return cc;
+
+        //    return cc.Substring(len - 4).PadLeft(len, '#');
+        //}
     }
 }
