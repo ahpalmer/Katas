@@ -13,10 +13,13 @@ public class Program
         //RunCSharp();
         Kyu8 cSharp = new Kyu8();
         Kyu6 kyu6 = new Kyu6();
+        Kyu7 kyu7 = new Kyu7();
 
-        Console.WriteLine(kyu6.Persistence(999));
-        Console.WriteLine(kyu6.Persistence(39));
-        Console.WriteLine(kyu6.Persistence(4));
+        Console.WriteLine(Kyu7.Maskify("hello"));
+
+        //Console.WriteLine(kyu6.Persistence(999));
+        //Console.WriteLine(kyu6.Persistence(39));
+        //Console.WriteLine(kyu6.Persistence(4));
     }
 
     public static void RunCSharp()
