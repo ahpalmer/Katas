@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\andrewpalmer\\Documents\\CloudRepos\\Katas\\Katas.csproj",
+      "projectUniqueName": "C:\\Users\\andrewpalmer\\Documents\\CloudRepos\\Katas\\src\\Katas.csproj",
       "projectName": "Katas",
-      "projectPath": "C:\\Users\\andrewpalmer\\Documents\\CloudRepos\\Katas\\Katas.csproj",
+      "projectPath": "C:\\Users\\andrewpalmer\\Documents\\CloudRepos\\Katas\\src\\Katas.csproj",
       "packagesPath": "C:\\Users\\andrewpalmer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\andrewpalmer\\Documents\\CloudRepos\\Katas\\obj\\",
+      "outputPath": "C:\\Users\\andrewpalmer\\Documents\\CloudRepos\\Katas\\src\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
