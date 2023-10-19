@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,5 +20,29 @@ internal class Kyu6
         }
 
         return count;
+    }
+
+    //You are given an array (which will have a length of at least 3, but could be very large) containing integers. The array is either entirely comprised of odd integers or entirely comprised of even integers except for a single integer N. Write a method that takes the array as an argument and returns this "outlier" N.
+    public static int Find(int[] integers)
+    {
+        //.Where is the ienumerable method that you should have used
+        var stepOne = integers.DistinctBy(x => x % 2);
+        var evens = integers.Count(x => x % 2 == 0);
+        if (evens == 1)
+        {
+            return integers.SkipWhile(x => x % 2 == 1).First();
+        }
+        else
+        {
+            return integers.SkipWhile(x => x % 2 == 0).First();
+        }
+    }
+
+    public static void TestFind()
+    {
+        int[] arrayOne = new int[] { 2, 4, 0, 100, 4, 11, 2602, 36 };
+        Console.WriteLine($"Should return 11: {Find(arrayOne)}");
+        int[] arrayTwo = new int[] { 160, 3, 1719, 19, 11, 13, -21 };
+        Console.WriteLine($"Should return 160: {Find(arrayTwo)}");
     }
 }
