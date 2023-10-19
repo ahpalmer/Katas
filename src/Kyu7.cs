@@ -33,4 +33,14 @@ internal class Kyu7
         //    return cc.Substring(len - 4).PadLeft(len, '#');
         //}
     }
+
+    public static int GetVowelCount(string str)
+    {
+
+        int vowelCount = 0;
+
+        // Your code here
+
+        return vowelCount;
+    }
 }
