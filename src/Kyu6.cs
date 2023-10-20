@@ -9,6 +9,48 @@ namespace Katas;
 
 internal class Kyu6
 {
+    //Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+    public static string[] Solution(string str)
+    {
+        if (str.Length % 2 == 1)
+        {
+            str = str + '_';
+        }
+
+        string tempStr = str;
+        string[] strArray = new string[str.Length / 2];
+        int count = 0;
+
+        while (tempStr.Length >= 2)
+        {
+            strArray[count] = tempStr.Substring(0, 2);
+            tempStr = tempStr.Substring(2);
+            count++;
+        }
+
+        return strArray;
+    }
+
+    public static void TestSolution()
+    {
+        string testOne = "abc";
+        string testTwo = "abcdef";
+        var testOneArray = Solution(testOne);
+        var testTwoArray = Solution(testTwo);
+
+        Console.WriteLine("Test One:");
+        foreach (var item in testOneArray)
+        {
+            Console.WriteLine(item);
+        }
+
+        Console.WriteLine("Test Two:");
+        foreach (var item in testTwoArray)
+        {
+            Console.WriteLine(item);
+        }
+    }
+
     public int Persistence(long n)
     {
         int count = 0;

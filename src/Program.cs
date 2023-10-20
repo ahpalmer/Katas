@@ -25,7 +25,8 @@ public class Program
 
     public static void RunKyu6()
     {
-        Kyu6.TestFind();
+        Kyu6.TestSolution();
+        //Kyu6.TestFind();
 
 
         //Console.WriteLine(kyu6.Persistence(999));
