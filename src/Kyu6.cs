@@ -9,6 +9,20 @@ namespace Katas;
 
 internal class Kyu6
 {
+    //Need a constructor for unit tests.  Not actually sure if this is true but it works
+    internal Kyu6()
+    {
+    }
+
+    //Time: 
+    //Spent 50 minutes on day 1 setting up a Unit Test that worked with an internal class.  Will solve the Kata tomorrow.
+    //Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+    public static string SpinWords(string sentence)
+    {
+        string answer = string.Empty;
+        return answer;
+    }
+
     //Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
     public static string[] Solution(string str)
     {

@@ -1,6 +1,4 @@
-﻿using Katas;
-
-namespace katas;
+﻿namespace Katas;
 
 public class Program
 {
