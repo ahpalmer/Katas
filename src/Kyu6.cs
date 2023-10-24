@@ -14,13 +14,34 @@ internal class Kyu6
     {
     }
 
-    //Time: 
+    //Time: 31 minutes
     //Spent 50 minutes on day 1 setting up a Unit Test that worked with an internal class.  Will solve the Kata tomorrow.
     //Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+    //Really cool answer from the internet:     return String.Join(" ", sentence.Split(' ').Select(str => str.Length >= 5 ? new string(str.Reverse().ToArray()) : str));
     public static string SpinWords(string sentence)
     {
-        string answer = string.Empty;
-        return answer;
+        string[] strArray = sentence.Split(' ');
+        int count = 0;
+        string[] answer = new string[strArray.Count()];
+
+        foreach (string str in strArray)
+        {
+            string tempStr = str;
+            if (str.Length > 4)
+            {
+                var temp = str.ToCharArray().Reverse().ToArray();
+                answer[count] = new String(temp);
+            }
+            else
+            {
+                answer[count] = str;
+            }
+
+            count++;
+        }
+
+        string answerFinal = String.Join(" ", answer);
+        return answerFinal;
     }
 
     //Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
