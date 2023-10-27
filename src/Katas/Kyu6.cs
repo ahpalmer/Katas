@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Katas;
@@ -12,6 +14,31 @@ internal class Kyu6
     //Need a constructor for unit tests.  Not actually sure if this is true but it works
     internal Kyu6()
     {
+    }
+
+    //Time:1hour 24 mins
+    public static string AlphabetPosition(string text)
+    {
+        //string pattern = "[^a-ZA-Z]";
+        //string replacement = "";
+        //string shortenedText = Regex.Replace(text, pattern, replacement);
+        string pattern2 = @"[A-Z]";
+        Regex reg = new Regex("[^a-zA-Z]");
+        string shortenedText = reg.Replace(text, "");
+        if (shortenedText.Length == 0)
+        {
+            return string.Empty;
+        }
+
+        string shortenedText2 = Regex.Replace(shortenedText, pattern2, m => m.Value.ToLower());
+        if (shortenedText2.Length == 0)
+        {
+            return string.Empty;
+        }
+
+        var answer = shortenedText2.Select(c => ((int)c - 96).ToString()).Aggregate((total, next) => total + " " + next);
+
+        return answer;
     }
 
     //Time: 31 minutes
