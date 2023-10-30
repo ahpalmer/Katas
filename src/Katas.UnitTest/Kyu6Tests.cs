@@ -7,6 +7,13 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void PhoneNumberTest()
+    {
+        Assert.AreEqual("(123) 456-7890", Kyu6.CreatePhoneNumber(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 }));
+        Assert.AreEqual("(111) 111-1111", Kyu6.CreatePhoneNumber(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }));
+    }
+
+    [TestMethod]
     public void RomanDecodeTest()
     {
         Assert.AreEqual(1666, Kyu6.RomanDecode("MDCLXVI"));

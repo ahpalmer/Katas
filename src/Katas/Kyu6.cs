@@ -16,6 +16,15 @@ internal class Kyu6
     {
     }
 
+    //Time: 9 minutes
+    public static string CreatePhoneNumber(int[] numbers)
+    {
+        string firstHalf = $"({numbers[0]}{numbers[1]}{numbers[2]})";
+        string secondHalf = $"{numbers[3]}{numbers[4]}{numbers[5]}-{numbers[6]}{numbers[7]}{numbers[8]}{numbers[9]}";
+        string answer = string.Join(" ", firstHalf, secondHalf);
+        return answer;
+    }
+
     //Time: 1hr 40min
     public static int RomanDecode(string roman)
     {
