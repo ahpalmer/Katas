@@ -7,6 +7,15 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void RomanDecodeTest()
+    {
+        Assert.AreEqual(1666, Kyu6.RomanDecode("MDCLXVI"));
+        Assert.AreEqual(1990, Kyu6.RomanDecode("MCMXC"));
+        Assert.AreEqual(2008, Kyu6.RomanDecode("MMVIII"));
+
+    }
+
+    [TestMethod]
     public void AlphabetTest()
     {
         Assert.AreEqual("20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11", Kyu6.AlphabetPosition("The sunset sets at twelve o' clock."));

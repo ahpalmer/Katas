@@ -16,6 +16,95 @@ internal class Kyu6
     {
     }
 
+    //Time: 1hr 40min
+    public static int RomanDecode(string roman)
+    {
+        int currentInt = 0;
+        int nextInt = 0;
+        int lastInt = 0;
+        int answer = 0;
+        for(int i = 0; i < roman.Length; i++)
+        {
+            if (roman.Length == 1)
+            {
+                return RomanSwitchCase(roman[i]);
+            }
+            currentInt = RomanSwitchCase(roman[i]);
+            if (i == 0)
+            {
+                nextInt = RomanSwitchCase(roman[i + 1]);
+                if (nextInt > currentInt)
+                {
+                    continue;
+                }
+                else
+                {
+                    answer = currentInt;
+                    continue;
+                }
+            }
+            if (i == roman.Length - 1)
+            {
+                lastInt = RomanSwitchCase(roman[i - 1]);
+                if (lastInt < currentInt)
+                {
+                    return answer + (currentInt - lastInt);
+                }
+                else
+                {
+                    return answer + currentInt;
+                }
+            }
+
+            nextInt = RomanSwitchCase(roman[i + 1]);
+            lastInt = RomanSwitchCase(roman[i - 1]);
+            if (nextInt > currentInt)
+            {
+                continue;
+            }
+            else if (currentInt > lastInt)
+            {
+                answer += (currentInt - lastInt);
+                continue;
+            }
+            else
+            {
+                answer += currentInt;
+            }
+        }
+        return answer;
+    }
+
+    public static int RomanSwitchCase(char c)
+    {
+        int tempInt = 0;
+        switch (c)
+        {
+            case 'M':
+                tempInt = 1000;
+                break;
+            case 'D':
+                tempInt = 500;
+                break;
+            case 'C':
+                tempInt = 100;
+                break;
+            case 'L':
+                tempInt = 50;
+                break;
+            case 'X':
+                tempInt = 10;
+                break;
+            case 'V':
+                tempInt = 5;
+                break;
+            case 'I':
+                tempInt = 1;
+                break;
+        }
+        return tempInt;
+    }
+
     //Time:1hour 24 mins
     public static string AlphabetPosition(string text)
     {
