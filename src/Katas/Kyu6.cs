@@ -16,6 +16,25 @@ internal class Kyu6
     {
     }
 
+    //Time:
+    //It's a learning day today.  Spent a lot of time on regex learning
+    public static string ToCamelCase(string str)
+    {
+        string replaced;
+        string pattern = @"[-_]\w";
+        Regex regex = new Regex(pattern);
+        MatchEvaluator matchEval = new MatchEvaluator(CapitalizeLetter);
+
+        replaced = regex.Replace(str, matchEval);
+
+        return replaced;
+    }
+
+    public static string CapitalizeLetter(Match match)
+    {
+        return match.Value[1].ToString().ToUpper();
+    }
+
     //Time: 9 minutes
     public static string CreatePhoneNumber(int[] numbers)
     {

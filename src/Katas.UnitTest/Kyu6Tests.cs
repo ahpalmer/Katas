@@ -7,6 +7,13 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void ToCamelCaseTest()
+    {
+        Assert.AreEqual("theStealthWarrior", Kyu6.ToCamelCase("the_stealth_warrior"), "Kata.ToCamelCase('the_stealth_warrior') did not return correct value");
+        Assert.AreEqual("TheStealthWarrior", Kyu6.ToCamelCase("The-Stealth-Warrior"), "Kata.ToCamelCase('The-Stealth-Warrior') did not return correct value");
+    }
+
+    [TestMethod]
     public void PhoneNumberTest()
     {
         Assert.AreEqual("(123) 456-7890", Kyu6.CreatePhoneNumber(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 }));
