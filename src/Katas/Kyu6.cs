@@ -17,6 +17,27 @@ internal class Kyu6
     }
 
     //Time:
+    public static bool IsPrime(int n)
+    {
+        if (n == 0) { return false; }
+        if (n == 1) { return false; }
+        if (n < 0) { return false; }
+
+        long factor = 2;
+
+        while ((factor * factor) <= n)
+        {
+            if (n % factor == 0) 
+            {
+                return false;
+            }
+            factor++;
+        }
+
+        return true;
+    }
+
+    //Time:
     //It's a learning day today.  Spent a lot of time on regex learning
     public static string ToCamelCase(string str)
     {

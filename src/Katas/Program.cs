@@ -23,7 +23,9 @@ public class Program
 
     public static void RunKyu6()
     {
-        Kyu6.AlphabetPosition("The sunset sets at twelve o' clock.");
+        //Kyu6.IsPrime(2147483647);
+
+        //Kyu6.AlphabetPosition("The sunset sets at twelve o' clock.");
 
         //Kyu6.TestSolution();
         //Kyu6.TestFind();

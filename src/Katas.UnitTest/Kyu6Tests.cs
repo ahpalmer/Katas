@@ -7,6 +7,26 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    [DynamicData(nameof(GetIsPrimeTestData), DynamicDataSourceType.Method)]
+    public void IsPrimeTest(int input, bool answer)
+    {
+        var result = Kyu6.IsPrime(input);
+        Assert.AreEqual(answer, result);
+    }
+
+    //This is an extension of the IsPrimeTest
+    public static IEnumerable<object[]> GetIsPrimeTestData()
+    {
+        yield return new object[] { 0, false };
+        yield return new object[] { 1, false };
+        yield return new object[] { 2, true };
+        yield return new object[] { -1, false };
+        yield return new object[] { 4, false };
+        yield return new object[] { 9, false };
+        //yield return new object[] { 2147483647, true };
+    }
+
+    [TestMethod]
     public void ToCamelCaseTest()
     {
         Assert.AreEqual("theStealthWarrior", Kyu6.ToCamelCase("the_stealth_warrior"), "Kata.ToCamelCase('the_stealth_warrior') did not return correct value");
