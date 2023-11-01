@@ -16,7 +16,8 @@ internal class Kyu6
     {
     }
 
-    //Time:
+    //Time:29 minutes to set up cool new unit tests
+    //25 minutes to complete the challenge
     public static bool IsPrime(int n)
     {
         if (n == 0) { return false; }
