@@ -8,6 +8,18 @@ namespace Katas;
 
 internal class Kyu7
 {
+    public static long FindNextSquare(long num)
+    {
+        double squared = Math.Sqrt(num);
+        if (squared % 1 == 0 && squared * squared == num)
+        {
+            long answer = (long)(squared + 1) * (long)(squared + 1);
+            return answer;
+        }
+        return -1;
+    }
+
+
     public static string Maskify(string cc)
     {
         IEnumerable<char> ccList = cc.AsEnumerable();
