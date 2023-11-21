@@ -1,4 +1,5 @@
-function Get-SumOfArrays {
+function Get-SumOfArrays 
+{
     param (
         [int[]]$Array1,
         [int[]]$Array2
