@@ -16,6 +16,30 @@ internal class Kyu6
     {
     }
 
+    //Time: 20 minutes
+    public static int HighestRank(int[] arr)
+    {
+        var query = arr.GroupBy(x => x);
+        int biggestCount = 0;
+        int biggestNum = 0;
+
+        foreach (var number in query)
+        {
+            var temp = number.Count();
+
+            if (temp > biggestCount)
+            {
+                biggestCount = temp;
+                biggestNum = number.First();
+            }
+            else if (temp == biggestCount)
+            {
+                biggestNum = biggestNum > number.First() ? biggestNum : number.First();
+            }
+        }
+        return biggestNum;
+    }
+
     //Time:29 minutes to set up cool new unit tests
     //25 minutes to complete the challenge
     public static bool IsPrime(int n)

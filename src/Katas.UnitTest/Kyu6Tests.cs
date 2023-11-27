@@ -7,6 +7,22 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void HighestRankTest()
+    {
+        var arr1 = new int[] { 12, 10, 8, 12, 7, 6, 4, 10, 12 };
+        var arr2 = new int[] { 12, 10, 8, 12, 7, 6, 4, 10, 12, 10 };
+        var arr3 = new int[] { 12, 10, 8, 8, 3, 3, 3, 3, 2, 4, 10, 12, 10 };
+        
+        var result1 = Kyu6.HighestRank(arr1);
+        var result2 = Kyu6.HighestRank(arr2);
+        var result3 = Kyu6.HighestRank(arr3);
+        Assert.AreEqual(12, result1);
+        Assert.AreEqual(12, result2);
+        Assert.AreEqual(3, result3);
+
+    }
+
+    [TestMethod]
     [DynamicData(nameof(GetIsPrimeTestData), DynamicDataSourceType.Method)]
     public void IsPrimeTest(int input, bool answer)
     {
