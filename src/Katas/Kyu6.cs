@@ -16,6 +16,31 @@ internal class Kyu6
     {
     }
 
+    //Time: 57 Minutes
+    public static string MyFirstInterpreter(string code)
+    {
+        string answer = "";
+        byte temp = 0;
+
+        foreach (char c in code)
+        {
+            if (c == '+' && temp == 255)
+            {
+                temp = 0;
+            }
+            else if (c == '+')
+            {
+                temp++;
+            }
+            else if (c == '.')
+            {
+                answer = answer + ((char)temp).ToString();
+            }
+        }
+
+        return answer;
+    }
+
     //Time: 20 minutes
     public static int HighestRank(int[] arr)
     {
