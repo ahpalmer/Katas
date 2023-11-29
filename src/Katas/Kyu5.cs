@@ -10,6 +10,31 @@ namespace Katas;
 
 internal class Kyu5
 {
+    //Time: 26 minutes
+    internal static string ToUnderscore(int str)
+    {
+        return str.ToString();
+    }
+
+    internal static string ToUnderscore(string str)
+    {
+        string temp = Regex.Replace(str, @"^[A-Z]", m => m.Value.ToLower());
+
+        string pattern = @"[A-Z]";
+        Regex regex = new Regex(pattern);
+        MatchEvaluator matchEval = new MatchEvaluator(ReplaceToUnderscore);
+
+        string answer = regex.Replace(temp, matchEval);
+
+        return answer;
+    }
+
+    public static string ReplaceToUnderscore(Match match)
+    {
+        string letter = match.Value.ToLower();
+        return "_" + letter;
+    }
+
     //Time: 45 Minutes
     internal static string Rot13(string input)
     {
