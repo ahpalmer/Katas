@@ -10,6 +10,18 @@ namespace Katas.UnitTest;
 public class Kyu5Tests
 {
     [TestMethod]
+    public void RgbTests()
+    {
+        Assert.AreEqual("FFFFFF", Kyu5.Rgb(255, 255, 255));
+        Assert.AreEqual("FFFFFF", Kyu5.Rgb(255, 255, 300));
+        Assert.AreEqual("000000", Kyu5.Rgb(0, 0, 0));
+        Assert.AreEqual("9400D3", Kyu5.Rgb(148, 0, 211));
+        Assert.AreEqual("9400D3", Kyu5.Rgb(148, -20, 211), "Handle negative numbers.");
+        Assert.AreEqual("90C3D4", Kyu5.Rgb(144, 195, 212));
+        Assert.AreEqual("D4350C", Kyu5.Rgb(212, 53, 12), "Consider single hex digit numbers.");
+    }
+
+    [TestMethod]
     public void ToUnderscoreTests()
     {
         Assert.AreEqual("test_controller", Kyu5.ToUnderscore("TestController"));

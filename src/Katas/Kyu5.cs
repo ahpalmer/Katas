@@ -16,6 +16,30 @@ internal class Kyu5
         return str.ToString();
     }
 
+    //Time: 37 minutes
+    public static string Rgb(int r, int g, int b)
+    {
+        int[] inputs = { r, g, b };
+        foreach (var i in inputs.Select((value, index) => new { value, index }))
+        {
+            if (i.value < 0)
+            {
+                inputs[i.index] = 0;
+            }
+            else if (i.value > 255)
+            {
+                inputs[i.index] = 255;
+            }
+        }
+
+        string red = inputs[0].ToString("X2");
+        string green = inputs[1].ToString("X2");
+        string blue = inputs[2].ToString("X2");
+        string[] strings = { red, green, blue };
+
+        return String.Join("", strings);
+    }
+
     internal static string ToUnderscore(string str)
     {
         string temp = Regex.Replace(str, @"^[A-Z]", m => m.Value.ToLower());
