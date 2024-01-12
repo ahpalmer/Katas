@@ -16,6 +16,34 @@ internal class Kyu5
         return str.ToString();
     }
 
+    public static string orderWeight(string strng)
+    {
+        if (strng == "")
+        {
+            return "";
+        }
+
+        string stringInput = Regex.Replace(strng, @"\s+", " ");
+        List<(long, long)> values = new List<(long, long)>();
+        List<string> numbersList = stringInput.Trim().Split(" ").ToList();
+
+        foreach(var number in numbersList)
+        {
+            List<long> individualNums = number.Select(c => Int64.Parse(c.ToString())).ToList();
+            (long, long) tempNum = (Int64.Parse(number), individualNums.Sum());
+            values.Add(tempNum);
+        }
+
+        var sortedList = values
+            .OrderBy(c => c.Item2)
+            .ThenBy(b => b.Item1.ToString())
+            .ToList();
+
+        string answer = string.Join(" ", sortedList.Select(c => c.Item1));
+        //string answer = sortedList.Select(c => c.Item1.ToString()).Aggregate((total, next) => (total + next + " ").ToString());
+        return answer;
+    }
+
     //Time: 37 minutes
     public static string Rgb(int r, int g, int b)
     {

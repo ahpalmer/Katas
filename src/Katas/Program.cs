@@ -4,11 +4,15 @@ public class Program
 {
     public Program()
     {
-
     }
     public static void Main(string[] args)
     {
-        RunKyu6();
+        RunKyu5();
+    }
+
+    public static void RunKyu5()
+    {
+        Kyu5.orderWeight("56 65 74 100 99 68 86 180 90");
     }
 
     public static void RunKyu8()
