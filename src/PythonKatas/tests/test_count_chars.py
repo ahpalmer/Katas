@@ -1,11 +1,11 @@
-import codewars_test as test
-from count_chars import count_characters
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'src'))
 
-@test.describe("Basic Tests")
-def basic_tests():
-    @test.it("Basic Tests")
-    def basic_tests():
-        test.assert_equals(count_characters('aba'), {'a': 2, 'b': 1})
-        test.assert_equals(count_characters(''), {})
-        test.assert_equals(count_characters('aa'), {'a' : 2})
-        test.assert_equals(count_characters('aabb'), {'b' : 2, 'a' : 2})
+from Kyu6.count_chars import count_characters
+
+def test_count_characters():
+    assert count_characters('aba') == {'a': 2, 'b': 1}
+    assert count_characters('') == {}
+    assert count_characters('aa') == {'a' : 2}
+    assert count_characters('aabb') == {'b' : 2, 'a' : 2}

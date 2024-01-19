@@ -1,10 +1,10 @@
-import codewars_test as test
-from ..src.Kyu7.series_sum import series_sum
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'src'))
 
-@test.describe("Fixed Tests")
-def fixed_tests():
-    @test.it('Basic Test Cases')
-    def basic_test_cases():
-        test.assert_equals(series_sum(1), "1.00")
-        test.assert_equals(series_sum(2), "1.25")
-        test.assert_equals(series_sum(3), "1.39")
+from Kyu7.series_sum import series_sum
+
+def test_series_sum():
+    assert series_sum(1) == "1.00"
+    assert series_sum(2) == "1.25"
+    assert series_sum(3) == "1.39"
