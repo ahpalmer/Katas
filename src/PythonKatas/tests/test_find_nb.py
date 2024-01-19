@@ -1,5 +1,5 @@
 import codewars_test as test
-from Kyu6.find_nb import find_nb
+from ..src.Kyu6.find_nb import find_nb
 
 @test.describe("Fixed Tests")
 def fixed_tests():
