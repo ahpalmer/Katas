@@ -8,6 +8,16 @@ namespace Katas;
 
 internal class Kyu7
 {
+    public static bool StringEnding(string str, string ending)
+    {
+        if (ending == "") return true;
+        if (str.Length < ending.Length) return false;
+
+        string test = str.Substring(str.Length - ending.Length);
+        if (test == ending) return true;
+        return false;
+    }
+
     public static long FindNextSquare(long num)
     {
         double squared = Math.Sqrt(num);

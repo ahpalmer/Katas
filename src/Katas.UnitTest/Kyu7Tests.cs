@@ -6,6 +6,21 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void StringEndingTest()
+    {
+        Assert.AreEqual(true, Kyu7.StringEnding("samurai", "ai"));
+        Assert.AreEqual(false, Kyu7.StringEnding("sumo", "omo"));
+        Assert.AreEqual(true, Kyu7.StringEnding("ninja", "ja"));
+        Assert.AreEqual(true, Kyu7.StringEnding("sensei", "i"));
+        Assert.AreEqual(false, Kyu7.StringEnding("samurai", "ra"));
+        Assert.AreEqual(false, Kyu7.StringEnding("abc", "abcd"));
+        Assert.AreEqual(true, Kyu7.StringEnding("abc", ""));
+        Assert.AreEqual(false, Kyu7.StringEnding(":-)", ":-("));
+        Assert.AreEqual(true, Kyu7.StringEnding("!@#$%^&*() :-)", ":-)"));
+        Assert.AreEqual(false, Kyu7.StringEnding("abc\n", "abc"));
+    }
+
+    [TestMethod]
     public void FindNextSquareTest()
     {
         Assert.AreEqual(-1, Kyu7.FindNextSquare(155));
