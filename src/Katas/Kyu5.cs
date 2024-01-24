@@ -5,11 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Xml.Schema;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Katas;
 
 internal class Kyu5
 {
+    // Time:23 minutes.  I finished it much faster but had a problem with the test
+    // Lesson for today:  Assert.IsEqual does not work on arrays or lists. Use CollectionAssert.AreEqual() instead 
+    // Going for speed.  Set up tests ahead of time.
+    public static int[] MoveZeroes(int[] arr)
+    {
+        List<int> arrList = arr.ToList();
+        int count = arrList.Count(x => x == 0);
+        List<int> clearedList = arrList.Where(x => x != 0).ToList();
+        for (int i = 0; i < count; i++)
+            clearedList.Add(0);
+        int[] answer = clearedList.ToArray();
+
+        return answer;
+    }
+
     //Time: 26 minutes
     internal static string ToUnderscore(int str)
     {

@@ -10,6 +10,12 @@ namespace Katas.UnitTest;
 public class Kyu5Tests
 {
     [TestMethod]
+    public void MoveZerosTests()
+    {
+        CollectionAssert.AreEqual(new int[] { 1, 2, 1, 1, 3, 1, 0, 0, 0, 0 }, Kyu5.MoveZeroes(new int[] { 1, 2, 0, 1, 0, 1, 0, 3, 0, 1 }));
+    }
+
+    [TestMethod]
     public void orderWeightTests()
     {
         Assert.AreEqual("2000 103 123 4444 99", Kyu5.orderWeight("103 123 4444 99 2000"));
