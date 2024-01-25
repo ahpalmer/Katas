@@ -16,6 +16,16 @@ internal class Kyu6
     {
     }
 
+    // Time: forgot to time it.  About 8 minutes.
+    public static string Likes(string[] name)
+    {
+        if (name.Count() == 0) return "no one likes this";
+        if (name.Count() == 1) return $"{name.First()} likes this";
+        if (name.Count() == 2) return $"{name[0]} and {name[1]} like this";
+        if (name.Count() == 3) return $"{name[0]}, {name[1]} and {name[2]} like this";
+        else return $"{name[0]}, {name[1]} and {name.Count() - 2} others like this";
+    }
+
     //Time: 57 Minutes
     public static string MyFirstInterpreter(string code)
     {
@@ -38,7 +48,7 @@ internal class Kyu6
             }
         }
 
-        return answer;
+    return answer;
     }
 
     //Time: 20 minutes
