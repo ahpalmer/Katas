@@ -16,6 +16,15 @@ internal class Kyu6
     {
     }
 
+    //Time: Like 4 minutes
+    public static bool IsPangram(string str)
+    {
+        string input = str.ToLower();
+        bool answer = input.Contains("a") && input.Contains("b") && input.Contains("c") && input.Contains("d") && input.Contains("e") && input.Contains("f") && input.Contains("g") && input.Contains("h") && input.Contains("i") && input.Contains("j") && input.Contains("k") && input.Contains("l") && input.Contains("m") && input.Contains("n") && input.Contains("o") && input.Contains("p") && input.Contains("q") && input.Contains("r") && input.Contains("s") && input.Contains("t") && input.Contains("u") && input.Contains("v") && input.Contains("w") && input.Contains("x") && input.Contains("y") && input.Contains("z");
+
+        return answer;
+    }
+
     // Time: forgot to time it.  About 8 minutes.
     public static string Likes(string[] name)
     {

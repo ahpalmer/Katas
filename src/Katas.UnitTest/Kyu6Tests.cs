@@ -7,6 +7,12 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void TestIsPangram()
+    {
+        Assert.AreEqual(true, Kyu6.IsPangram("The Quick brown fox jumps over the lazy dog."));
+    }
+
+    [TestMethod]
     public void TestLikes()
     {
         Assert.AreEqual("no one likes this", Kyu6.Likes(new string[0]));
