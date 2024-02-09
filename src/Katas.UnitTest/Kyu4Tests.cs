@@ -10,6 +10,27 @@ namespace Katas.UnitTest;
 public class Kyu4Tests
 {
     [TestMethod]
+    public void SumIntervalsTests()
+    {
+        Assert.AreEqual(0, Kyu4.SumIntervals(new (int, int)[] { }));
+        Assert.AreEqual(0, Kyu4.SumIntervals(new (int, int)[] { (4, 4), (6, 6), (8, 8) }));
+        Assert.AreEqual(9, Kyu4.SumIntervals(new (int, int)[] { (1, 2), (6, 10), (11, 15) }));
+        Assert.AreEqual(11, Kyu4.SumIntervals(new (int, int)[] { (4, 8), (9, 10), (15, 21) }));
+        Assert.AreEqual(7, Kyu4.SumIntervals(new (int, int)[] { (-1, 4), (-5, -3) }));
+        Assert.AreEqual(78, Kyu4.SumIntervals(new (int, int)[] { (-245, -218), (-194, -179), (-155, -119) }));
+        Assert.AreEqual(54, Kyu4.SumIntervals(new (int, int)[] { (1, 2), (2, 6), (6, 55) }));
+        Assert.AreEqual(23, Kyu4.SumIntervals(new (int, int)[] { (-2, -1), (-1, 0), (0, 21) }));
+        Assert.AreEqual(7, Kyu4.SumIntervals(new (int, int)[] { (1, 4), (7, 10), (3, 5) }));
+        Assert.AreEqual(6, Kyu4.SumIntervals(new (int, int)[] { (5, 8), (3, 6), (1, 2) }));
+        Assert.AreEqual(19, Kyu4.SumIntervals(new (int, int)[] { (1, 5), (10, 20), (1, 6), (16, 19), (5, 11) }));
+        Assert.AreEqual(13, Kyu4.SumIntervals(new (int, int)[] { (2, 5), (-1, 2), (-40, -35), (6, 8) }));
+        Assert.AreEqual(1234, Kyu4.SumIntervals(new (int, int)[] { (-7, 8), (-2, 10), (5, 15), (2000, 3150), (-5400, -5338) }));
+        Assert.AreEqual(158, Kyu4.SumIntervals(new (int, int)[] { (-101, 24), (-35, 27), (27, 53), (-105, 20), (-36, 26) }));
+        Assert.AreEqual(2000000000, Kyu4.SumIntervals(new (int, int)[] { (-1000000000, 1000000000) }));
+        Assert.AreEqual(100000030, Kyu4.SumIntervals(new (int, int)[] { (0, 20), (-100000000, 10), (30, 40) }));
+    }
+
+    [TestMethod]
     public void HammingTests()
     {
         Assert.AreEqual(1, Kyu4.hamming(1));
