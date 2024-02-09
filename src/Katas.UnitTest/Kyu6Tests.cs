@@ -7,6 +7,15 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void TestIsValidWalk()
+    {
+        Assert.AreEqual(true, Kyu6.IsValidWalk(new string[] { "n", "s", "n", "s", "n", "s", "n", "s", "n", "s" }), "should return true");
+        Assert.AreEqual(false, Kyu6.IsValidWalk(new string[] { "w", "e", "w", "e", "w", "e", "w", "e", "w", "e", "w", "e" }), "should return false");
+        Assert.AreEqual(false, Kyu6.IsValidWalk(new string[] { "w" }), "should return false");
+        Assert.AreEqual(false, Kyu6.IsValidWalk(new string[] { "n", "n", "n", "s", "n", "s", "n", "s", "n", "s" }), "should return false");
+    }
+
+    [TestMethod]
     public void TestIsPangram()
     {
         Assert.AreEqual(true, Kyu6.IsPangram("The Quick brown fox jumps over the lazy dog."));

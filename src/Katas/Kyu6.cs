@@ -16,6 +16,20 @@ internal class Kyu6
     {
     }
 
+    //Time: 6 minutes
+    public static bool IsValidWalk(string[] walk)
+    {
+        if (walk.Count() == 1 && walk.Contains("")) return false;
+        if (walk.Count() != 10) return false;
+
+        int north = walk.Where(direction => direction.ToLower() == "n").Count();
+        int south = walk.Where(direction => direction.ToLower() == "s").Count();
+        int east = walk.Where(direction => direction.ToLower() == "e").Count();
+        int west = walk.Where(direction => direction.ToLower() == "w").Count();
+
+        if (north == south && east == west) return true;
+        return false;
+    }
     //Time: Like 4 minutes
     public static bool IsPangram(string str)
     {
