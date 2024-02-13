@@ -12,22 +12,78 @@ namespace Katas
         // The brute force method would be to create an int[] with all ints between the given ranges and then count the int[]
         // I don't want to do that.  It wasn't performant in AOC D5 and I want to learn to do it better.
         // I don't think there's a method to do it.
+
         public static int SumIntervals((int, int)[] intervals)
         {
-            for (int i = 0; i < intervals.Length - 1; i++)
+            Array.Sort(intervals, (x, y) => x.Item1 - y.Item1);
+            int max = int.MinValue;
+            int total = 0;
+            foreach (var interval in intervals)
             {
-                bool check = CheckOverlap(intervals[i], intervals[i + 1]);
-                if (check)
-                {
-                    CombineIntervals(intervals[i], intervals[i + 1]);
-                    i++;
-                    break;
-                }
+                max = Math.Max(max, interval.Item1);
+                total += Math.Max(0, interval.Item2 - max);
+                max = Math.Max(max, interval.Item2);
             }
-
-            // Todo: finish tomorrow
-            throw new NotImplementedException();
+            return total;
         }
+
+        //public static int SumIntervals((int, int)[] inputIntervals)
+        //{
+        //    Array.Sort(inputIntervals, (x, y) => x.Item1 - y.Item1);
+        //    List<(int, int)> workingList = new List<(int, int)> ();
+        //    bool lastRunWasCombo = false;
+        //    int j = 0;
+        //    for (int i = 0; i < inputIntervals.Length; i++)
+        //    {
+        //        j = i;
+        //        if (i == 0)
+        //        {
+        //            bool check = CheckOverlap(inputIntervals[i], inputIntervals[i + 1]);
+        //            if (check)
+        //            {
+        //                workingList.Add(CombineIntervals(inputIntervals[i], inputIntervals[i + 1]));
+        //                i++;
+        //            }
+        //            else
+        //            {
+        //                workingList.Add(inputIntervals[i]);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (i >= inputIntervals.Length - 1)
+        //            {
+        //                workingList.Add(inputIntervals[i]);
+        //            }
+        //            //else if (i >= inputIntervals.Length - 1 && lastRunWasCombo == false)
+        //            //{
+        //            //    workingList.Add(inputIntervals[i]);
+        //            //}
+        //            if (CheckOverlap(inputIntervals[i], inputIntervals[i + 1]))
+        //            {
+        //                var itemOne = workingList[i].Item1;
+        //                var itemTwo = workingList[i].Item2;
+        //                workingList.Remove((itemOne, itemTwo));
+        //                workingList.Add(CombineIntervals((itemOne, itemTwo), inputIntervals[i + 1]));
+        //                i++;
+        //                j++;
+        //                lastRunWasCombo = true;
+        //            }
+        //            else
+        //            {
+        //                workingList.Add(inputIntervals[i]);
+        //                lastRunWasCombo = false;
+        //            }
+        //        }
+        //    }
+
+        //    if (!lastRunWasCombo && j == )
+        //    {
+        //        workingList.Add(inputIntervals[j]);
+        //    }
+        //    return workingList.Select(interval => interval.Item2 - interval.Item1).Sum();
+        //}
+
 
         public static bool CheckOverlap((int, int) intervalOne, (int, int) intervalTwo)
         {
@@ -40,7 +96,7 @@ namespace Katas
 
         public static (int, int) CombineIntervals((int, int) intervalOne, (int, int) intervalTwo)
         {
-            int minStart = Math.Min(intervalOne.Item1, intervalTwo.Item2);
+            int minStart = Math.Min(intervalOne.Item1, intervalTwo.Item1);
             int maxEnd = Math.Max(intervalOne.Item2, intervalTwo.Item2);
 
             return (minStart, maxEnd);
