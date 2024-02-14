@@ -6,6 +6,15 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void RemoveSmallestTest()
+    {
+        CollectionAssert.AreEqual(new List<int> { 2, 3, 4, 5 }, Kyu7.RemoveSmallest(new List<int> { 1, 2, 3, 4, 5 }));
+        CollectionAssert.AreEqual(new List<int> { 5, 3, 2, 4 }, Kyu7.RemoveSmallest(new List<int> { 5, 3, 2, 1, 4 }));
+        CollectionAssert.AreEqual(new List<int> { 2, 3, 1, 1 }, Kyu7.RemoveSmallest(new List<int> { 1, 2, 3, 1, 1 }));
+        CollectionAssert.AreEqual(new List<int>(), Kyu7.RemoveSmallest(new List<int>()));
+    }
+
+    [TestMethod]
     public void StringEndingTest()
     {
         Assert.AreEqual(true, Kyu7.StringEnding("samurai", "ai"));

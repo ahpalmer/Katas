@@ -8,6 +8,23 @@ namespace Katas;
 
 internal class Kyu7
 {
+    // Time: 
+    public static List<int> RemoveSmallest(List<int> numbers)
+    {
+        if (numbers.Count == 0)
+        {
+            return numbers;
+        }
+
+        int min = numbers.Min();
+        var stuff = numbers.FindIndex(x => x == min);
+        List<int> answer = numbers.Where((x, y) => y != stuff).ToList();
+        return answer;
+        //Best answer:
+        //numbers.Remove(numbers.DefaultIfEmpty().Min());
+        //return numbers;
+    }
+
     public static bool StringEnding(string str, string ending)
     {
         if (ending == "") return true;
