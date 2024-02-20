@@ -7,6 +7,14 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void TestCleverSplit()
+    {
+        CollectionAssert.AreEqual(new string[] { "Buy", "a", "!car", "[!red green !white]", "[cheap or !new]" }, Kyu6.CleverSplit("Buy a !car [!red green !white] [cheap or !new]"));
+        CollectionAssert.AreEqual(new string[] { "!Learning", "!C#", "is", "[a joy]" }, Kyu6.CleverSplit("!Learning !C# is [a joy]"));
+        CollectionAssert.AreEqual(new string[] { "[Cats and dogs]", "are", "!beautiful", "and", "[cute]" }, Kyu6.CleverSplit("[Cats and dogs] are !beautiful and [cute]"));
+    }
+
+    [TestMethod]
     public void TestIsValidWalk()
     {
         Assert.AreEqual(true, Kyu6.IsValidWalk(new string[] { "n", "s", "n", "s", "n", "s", "n", "s", "n", "s" }), "should return true");

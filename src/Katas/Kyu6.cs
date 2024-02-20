@@ -16,6 +16,23 @@ internal class Kyu6
     {
     }
 
+    // Time: 46 minutes
+    public static string[] CleverSplit(string s)
+    {
+        Regex regex = new Regex(@"\[.*?\]|\S+");
+        MatchCollection matches = regex.Matches(s);
+
+        List<string> stringList = new List<string>();
+        foreach (Match match in matches)
+        {
+            stringList.Add(match.Value);
+        }
+
+        string[] split = stringList.ToArray();
+
+        return stringList.ToArray();
+    }
+
     //Time: 6 minutes
     public static bool IsValidWalk(string[] walk)
     {
@@ -237,7 +254,7 @@ internal class Kyu6
         return tempInt;
     }
 
-    //Time:1hour 24 mins
+    // Time: 1hour 24 mins
     public static string AlphabetPosition(string text)
     {
         //string pattern = "[^a-ZA-Z]";
