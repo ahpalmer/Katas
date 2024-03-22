@@ -6,6 +6,13 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void GetVowelCountTest()
+    {
+        Assert.AreEqual(5, Kyu7.GetVowelCount("abracadabra"));
+
+    }
+
+    [TestMethod]
     public void RemoveSmallestTest()
     {
         CollectionAssert.AreEqual(new List<int> { 2, 3, 4, 5 }, Kyu7.RemoveSmallest(new List<int> { 1, 2, 3, 4, 5 }));

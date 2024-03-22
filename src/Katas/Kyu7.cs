@@ -8,7 +8,22 @@ namespace Katas;
 
 internal class Kyu7
 {
-    // Time: 
+    public static int GetVowelCount(string str)
+    {
+        int vowelCount = 0;
+        char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
+
+        foreach(char letter in str)
+        {
+            if (vowels.Contains(letter))
+            {
+                vowelCount++;
+            }
+        }
+
+        return vowelCount;
+    }
+
     public static List<int> RemoveSmallest(List<int> numbers)
     {
         if (numbers.Count == 0)
@@ -71,15 +86,5 @@ internal class Kyu7
 
         //    return cc.Substring(len - 4).PadLeft(len, '#');
         //}
-    }
-
-    public static int GetVowelCount(string str)
-    {
-
-        int vowelCount = 0;
-
-        // Your code here
-
-        return vowelCount;
     }
 }
