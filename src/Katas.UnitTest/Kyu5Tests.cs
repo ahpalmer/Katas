@@ -10,6 +10,20 @@ namespace Katas.UnitTest;
 public class Kyu5Tests
 {
     [TestMethod]
+    public void GetReadableTimeTests()
+    {
+        Assert.AreEqual("00:00:00", Kyu5.GetReadableTime(0));
+        Assert.AreEqual("00:00:59", Kyu5.GetReadableTime(59));
+        Assert.AreEqual("00:01:00", Kyu5.GetReadableTime(60));
+        Assert.AreEqual("00:59:59", Kyu5.GetReadableTime(3599));
+        Assert.AreEqual("01:00:00", Kyu5.GetReadableTime(3600));
+        Assert.AreEqual("12:34:56", Kyu5.GetReadableTime(45296));
+        Assert.AreEqual("23:59:59", Kyu5.GetReadableTime(86399));
+        Assert.AreEqual("24:00:00", Kyu5.GetReadableTime(86400));
+        Assert.AreEqual("99:59:59", Kyu5.GetReadableTime(359999));
+    }
+
+    [TestMethod]
     public void MoveZerosTests()
     {
         CollectionAssert.AreEqual(new int[] { 1, 2, 1, 1, 3, 1, 0, 0, 0, 0 }, Kyu5.MoveZeroes(new int[] { 1, 2, 0, 1, 0, 1, 0, 3, 0, 1 }));

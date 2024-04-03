@@ -12,7 +12,10 @@ public class Program
 
     public static void RunKyu5()
     {
-        Kyu5.orderWeight("56 65 74 100 99 68 86 180 90");
+        Kyu5.GetReadableTime(10000);
+        
+        
+        //Kyu5.orderWeight("56 65 74 100 99 68 86 180 90");
     }
 
     public static void RunKyu8()

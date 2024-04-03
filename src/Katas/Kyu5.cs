@@ -13,6 +13,66 @@ namespace Katas;
 
 internal class Kyu5
 {
+    // Time: 37 minutes
+    public static string GetReadableTime(int seconds)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (seconds == 0)
+        {
+            return "00:00:00";
+        }
+        else if (seconds > 359999)
+        {
+            return "99:59:59";
+        }
+
+
+        int calcSeconds = 0;
+        int calcMinutes = 0;
+        int calcHours = 0;
+
+        int intermediateMinutes = seconds / 60;
+        calcSeconds = seconds - (intermediateMinutes * 60);
+
+        calcHours = intermediateMinutes / 60;
+        calcMinutes = intermediateMinutes - (calcHours * 60);
+
+        string secondsStr = calcSeconds.ToString();
+        string minutesStr = calcMinutes.ToString();
+        string hoursStr = calcHours.ToString();
+
+        if (calcHours == 0)
+        {
+            hoursStr = "00";
+        }
+        else if (calcHours < 10)
+        {
+            StringBuilder sbHour = new StringBuilder();
+            sbHour.Append("0").Append(calcHours);
+            hoursStr = sbHour.ToString();
+        }
+        if (calcMinutes == 0)
+        {
+            minutesStr = "00";
+        }
+        else if (calcMinutes < 10)
+        {
+            StringBuilder sbMinute = new StringBuilder();
+            sbMinute.Append("0").Append(calcMinutes);
+            minutesStr = sbMinute.ToString();
+        }
+        if (calcSeconds < 10)
+        {
+            StringBuilder sbSec = new StringBuilder();
+            sbSec.Append("0").Append(calcSeconds);
+            secondsStr = sbSec.ToString();
+        }
+        sb.Append(hoursStr).Append(":").Append(minutesStr).Append(":").Append(secondsStr);
+
+        return sb.ToString();
+    }
+
     // Time:23 minutes.  I finished it much faster but had a problem with the test
     // Lesson for today:  Assert.IsEqual does not work on arrays or lists. Use CollectionAssert.AreEqual() instead 
     // Going for speed.  Set up tests ahead of time.
