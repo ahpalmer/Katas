@@ -6,6 +6,14 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void ToJadenCaseTest()
+    {
+        Assert.AreEqual("How Can Mirrors Be Real If Our Eyes Aren't Real",
+                    "How can mirrors be real if our eyes aren't real".ToJadenCase(),
+                    "Strings didn't match.");
+    }
+
+    [TestMethod]
     public void GetVowelCountTest()
     {
         Assert.AreEqual(5, Kyu7.GetVowelCount("abracadabra"));

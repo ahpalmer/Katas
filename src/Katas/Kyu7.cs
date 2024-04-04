@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Katas;
 
 internal class Kyu7
 {
+
     public static int GetVowelCount(string str)
     {
         int vowelCount = 0;
@@ -86,5 +88,15 @@ internal class Kyu7
 
         //    return cc.Substring(len - 4).PadLeft(len, '#');
         //}
+    }
+}
+
+public static class JadenCase
+{
+    // Time: 5 minutes
+    public static string ToJadenCase(this string phrase)
+    {
+        TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+        return myTI.ToTitleCase(phrase);
     }
 }
