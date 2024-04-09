@@ -17,13 +17,13 @@ function Get-PhoneNumberValidation([String]$PhoneNumber)
     }
 }
 
-# # Call the function with a sample input string
-# $PhoneNumber = "(123) 456-7890"
-# $matchingResults = Get-PhoneNumberValidation -PhoneNumber $PhoneNumber
+# Call the function with a sample input string
+$PhoneNumber = "(123) 456-7890"
+$matchingResults = Get-PhoneNumberValidation -PhoneNumber $PhoneNumber
 
-# # Output the matching results
-# foreach ($match in $matchingResults)
-# {
-#     Write-Output "Match found: $($match.Line)"
-# }
+# Output the matching results
+foreach ($match in $matchingResults)
+{
+    Write-Output "Match found: $($match.Line)"
+}
 
