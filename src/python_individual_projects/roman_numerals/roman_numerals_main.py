@@ -1,7 +1,47 @@
 class RomanNumerals:
     @staticmethod
     def to_roman(val : int) -> str:
-        return ''
+        roman_numeral_final = ""
+        roman_numeral_interim = ""
+        while val > 0:
+            val, roman_numeral_interim = RomanNumerals.interim_roman_letter(val)
+            roman_numeral_final = roman_numeral_final + roman_numeral_interim
+        print("val: ", val)
+        print("roman_numeral_final", roman_numeral_final)
+        return roman_numeral_final
+
+
+    @staticmethod
+    def interim_roman_letter(val):
+        if val >= 1000:
+            return val - 1000, "M"
+        elif val >= 900:
+            return val - 900, "CM"
+        elif val >= 500:
+            return val - 500, "D"
+        elif val >= 400:
+            return val - 400, "CD"
+        elif val >= 100:
+            return val - 100, "C"
+        elif val >= 90:
+            return val - 90, "XC"
+        elif val >= 50:
+            return val - 50, "L"
+        elif val >= 40:
+            return val - 40, "XL"
+        elif val >= 10:
+            return val - 10, "X"
+        elif val >= 9:
+            return val - 9, "IX"
+        elif val >= 5:
+            return val - 5, "V"
+        elif val >= 4:
+            return val - 4, "IV"
+        elif val >= 1:
+            return val - 1, "I"
+        elif val == 0:
+            return 0, ""
+        
 
     @staticmethod
     def from_roman(roman_num : str) -> int:
@@ -45,6 +85,6 @@ class RomanNumerals:
         }
         return dict
     
-
-input_list_converted = [1000, 100, 1000, 10, 100, 1, 5]
-RomanNumerals.find_from_roman_answer(input_list_converted)
+# RomanNumerals.to_roman(1987)
+# input_list_converted = [1000, 100, 1000, 10, 100, 1, 5]
+# RomanNumerals.find_from_roman_answer(input_list_converted)
