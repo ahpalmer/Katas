@@ -6,6 +6,13 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void SquareDigitsTest()
+    {
+        Assert.AreEqual(811181, Kyu7.SquareDigits(9119));
+        Assert.AreEqual(0, Kyu7.SquareDigits(0));
+    }
+
+    [TestMethod]
     public void ToJadenCaseTest()
     {
         Assert.AreEqual("How Can Mirrors Be Real If Our Eyes Aren't Real",

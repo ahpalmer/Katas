@@ -9,6 +9,13 @@ namespace Katas;
 
 internal class Kyu7
 {
+    public static int SquareDigits(int n)
+    {
+        string input = n.ToString();
+        IEnumerable<double> doubleAnswer = input.Select(i => Math.Pow(Int32.Parse(i.ToString()), 2));
+        string strAnswer = String.Join("", doubleAnswer.Select(i => i.ToString()));
+        return Int32.Parse(strAnswer);
+    }
 
     public static int GetVowelCount(string str)
     {
