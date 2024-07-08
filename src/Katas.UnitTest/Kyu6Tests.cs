@@ -7,6 +7,22 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void TestSantaSort()
+    {
+        var testData = new[] { "Sarah", "Charlie", "Mo" };
+        var sorted = Kyu6.SantaSort(testData);
+        CollectionAssert.AreEqual(new[] { "Charlie", "Mo", "Sarah" }, sorted);
+
+        var testData2 = new[] { "Sarah", "Sarah", "Charlie", "Charlie", "Charlie", "Mo", "Mo" };
+        var sorted2 = Kyu6.SantaSort(testData2);
+        CollectionAssert.AreEqual(new[] { "Charlie", "Mo", "Sarah", "Charlie", "Mo", "Sarah", "Charlie" }, sorted2);
+
+        var testData3 = new[] { "Sarah", "Sarah", "Charlie", "Charlie", "Charlie", "Mo", "Mo", "Charlie", "Charlie", "Charlie" };
+        var sorted3 = Kyu6.SantaSort(testData3);
+        CollectionAssert.AreEqual(new[] { "Charlie", "Mo", "Sarah", "Charlie", "Mo", "Sarah", "Charlie", "Charlie", "Charlie", "Charlie" }, sorted3);
+    }
+
+    [TestMethod]
     public void TestCleverSplit()
     {
         CollectionAssert.AreEqual(new string[] { "Buy", "a", "!car", "[!red green !white]", "[cheap or !new]" }, Kyu6.CleverSplit("Buy a !car [!red green !white] [cheap or !new]"));

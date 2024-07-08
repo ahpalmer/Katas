@@ -15,6 +15,48 @@ internal class Kyu6
     internal Kyu6()
     {
     }
+    public static string[] SantaSort(string[] unsortedNames)
+    {
+        // Best solution:
+        //return unsortedNames.GroupBy(name => name)
+        //            .OrderBy(name => name.Key)
+        //            .SelectMany(g => g.Select((name, index) => (name, index)))
+        //            .GroupBy(present => present.index, present => present.name)
+        //            .SelectMany(present => present)
+        //            .ToArray();
+        Dictionary<string, int> santaDict = new Dictionary<string, int>();
+        foreach(string name in unsortedNames)
+        {
+            if (santaDict.ContainsKey(name))
+            {
+                santaDict[name]++;
+            }
+            else
+            {
+                santaDict.Add(name, 1);
+            }
+        }
+        List<KeyValuePair<string, int>> santaList = santaDict.ToList();
+        List<KeyValuePair<string, int>> sortedSantaList = santaList.OrderBy(x => x.Key).ToList();
+        List<string> result = new List<string>();
+        int maxCount = sortedSantaList.Count();
+        int tempCount = 0;
+        for (int i = 0; i < unsortedNames.Count(); i++)
+        {
+            if (sortedSantaList[tempCount].Value == 0)
+            {
+                tempCount = tempCount == maxCount - 1 ? 0 : tempCount + 1;
+                i--;
+            }
+            else
+            {
+                result.Add(sortedSantaList[tempCount].Key);
+                sortedSantaList[tempCount] = new KeyValuePair<string, int>(sortedSantaList[tempCount].Key, sortedSantaList[tempCount].Value - 1);
+                tempCount = tempCount == maxCount - 1 ? 0 : tempCount + 1;
+            }
+        }
+        return result.ToArray();
+    }
 
     // Time: 46 minutes
     public static string[] CleverSplit(string s)
