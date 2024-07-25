@@ -15,6 +15,14 @@ internal class Kyu6
     internal Kyu6()
     {
     }
+
+    public long CalculateScrap(int[] scraps, int numberOfRobots)
+    {
+        List<double> doubleArrayScraps = scraps.Select(x => (double)x).ToList();
+        double totalScrap = doubleArrayScraps.Aggregate(1.0, (total, next) => total * (100.0 - next) / 100.0);
+        return (long)Math.Ceiling(numberOfRobots * 50 / totalScrap);
+    }
+
     public static string[] SantaSort(string[] unsortedNames)
     {
         // Best solution:

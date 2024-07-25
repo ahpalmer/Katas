@@ -7,6 +7,14 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void TestRobotorFactory()
+    {
+        var factory = new Kyu6();
+        Assert.AreEqual(5000, factory.CalculateScrap(new[] { 10 }, 90));
+        Assert.AreEqual(3820, factory.CalculateScrap(new[] { 20, 10 }, 55));
+    }
+
+    [TestMethod]
     public void TestSantaSort()
     {
         var testData = new[] { "Sarah", "Charlie", "Mo" };
