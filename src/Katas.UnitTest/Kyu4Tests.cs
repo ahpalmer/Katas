@@ -10,6 +10,27 @@ namespace Katas.UnitTest;
 public class Kyu4Tests
 {
     [TestMethod]
+    public void TestTop3()
+    {
+        CollectionAssert.AreEqual(new List<string> { "e", "d", "a" }, Kyu4.Top3("a a a  b  c c  d d d d  e e e e e"));
+        CollectionAssert.AreEqual(new List<string> { "e", "ddd", "aa" }, Kyu4.Top3("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e"));
+        CollectionAssert.AreEqual(new List<string> { "won't", "wont" }, Kyu4.Top3("  //wont won't won't "));
+        CollectionAssert.AreEqual(new List<string> { "e" }, Kyu4.Top3("  , e   .. "));
+        CollectionAssert.AreEqual(new List<string> { }, Kyu4.Top3("  ...  "));
+        CollectionAssert.AreEqual(new List<string> { }, Kyu4.Top3("  '  "));
+        CollectionAssert.AreEqual(new List<string> { }, Kyu4.Top3("  '''  "));
+        CollectionAssert.AreEqual(new List<string> { "a", "of", "on" }, Kyu4.Top3(
+            string.Join("\n", new string[]{"In a village of La Mancha, the name of which I have no desire to call to",
+                  "mind, there lived not long since one of those gentlemen that keep a lance",
+                  "in the lance-rack, an old buckler, a lean hack, and a greyhound for",
+                  "coursing. An olla of rather more beef than mutton, a salad on most",
+                  "nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra",
+                  "on Sundays, made away with three-quarters of his income." })));
+        CollectionAssert.AreEqual(new List<string> { "tujrfwe", "ednb", "xovm" }, Kyu4.Top3("TUjrFWE_TUjrFWE;kAobiQTc ICWqRt' ICWqRt'_LWYfn ICWqRt' eDNb TUjrFWE yFxOMg:LWYfn JvmvrvcQa.eDNb TUjrFWE:bKTF LWYfn LWYfn;ICWqRt'/ICWqRt' xoVm WXEa_TUjrFWE:AYBXZK xoVm eDNb-kAobiQTc NvIJvaLmh TUjrFWE_bKTF TUjrFWE xoVm Zt'JxN eDNb;LWYfn xoVm:ICWqRt'-yFxOMg OfeDPTxFMz xoVm;eDNb!eDNb AYBXZK_bKTF yFxOMg!kAobiQTc eDNb OfeDPTxFMz?xoVm;Zt'JxN?kAobiQTc OfeDPTxFMz:eDNb AYBXZK AYBXZK Zt'JxN AYBXZK TUjrFWE_TUjrFWE/kAobiQTc/Zt'JxN/NvIJvaLmh Zt'JxN/TUjrFWE JvmvrvcQa LWYfn ICWqRt';OfeDPTxFMz yFxOMg,eDNb-TUjrFWE OfeDPTxFMz.xoVm/OfeDPTxFMz bKTF;bKTF NvIJvaLmh xoVm/LWYfn-AYBXZK/bKTF eDNb,TUjrFWE eDNb?yFxOMg eDNb-AYBXZK:yFxOMg LWYfn:bKTF yFxOMg Vaz!JvmvrvcQa-ICWqRt' OfeDPTxFMz eDNb-xoVm NvIJvaLmh.eDNb_LWYfn_Zt'JxN?Zt'JxN_AYBXZK.LWYfn_ICWqRt' yFxOMg WXEa?xoVm ICWqRt'/kAobiQTc LWYfn xoVm JvmvrvcQa bKTF;ICWqRt',kAobiQTc TUjrFWE LWYfn kAobiQTc yFxOMg AYBXZK.AYBXZK JvmvrvcQa/OfeDPTxFMz yFxOMg.LWYfn eDNb,JvmvrvcQa eDNb kAobiQTc;AYBXZK/Vaz NvIJvaLmh eDNb eDNb!LWYfn?ICWqRt' NvIJvaLmh bKTF LWYfn AYBXZK AYBXZK xoVm NvIJvaLmh.JvmvrvcQa NvIJvaLmh eDNb JvmvrvcQa LWYfn-TUjrFWE LWYfn WXEa eDNb.TUjrFWE Zt'JxN Vaz bKTF;bKTF?Zt'JxN JvmvrvcQa-bKTF.Vaz AYBXZK OfeDPTxFMz ICWqRt':ICWqRt' TUjrFWE!AYBXZK?Zt'JxN,kAobiQTc yFxOMg AYBXZK NvIJvaLmh yFxOMg Zt'JxN yFxOMg-OfeDPTxFMz ICWqRt' Vaz NvIJvaLmh_Vaz,Zt'JxN TUjrFWE JvmvrvcQa bKTF;JvmvrvcQa Vaz!yFxOMg LWYfn,Vaz kAobiQTc JvmvrvcQa Vaz:LWYfn WXEa,LWYfn;kAobiQTc_bKTF/LWYfn.JvmvrvcQa!TUjrFWE kAobiQTc bKTF!TUjrFWE OfeDPTxFMz Vaz?eDNb_eDNb!TUjrFWE xoVm JvmvrvcQa.Zt'JxN eDNb!eDNb eDNb NvIJvaLmh?bKTF TUjrFWE Zt'JxN xoVm Zt'JxN_Zt'JxN yFxOMg bKTF,kAobiQTc,NvIJvaLmh.ICWqRt' AYBXZK xoVm;xoVm;bKTF ICWqRt' eDNb TUjrFWE?JvmvrvcQa OfeDPTxFMz Zt'JxN!WXEa NvIJvaLmh-AYBXZK NvIJvaLmh;yFxOMg.xoVm:LWYfn xoVm/Zt'JxN kAobiQTc-bKTF AYBXZK_NvIJvaLmh-eDNb xoVm-xoVm_LWYfn_AYBXZK.bKTF.WXEa_OfeDPTxFMz:ICWqRt' AYBXZK TUjrFWE;JvmvrvcQa!yFxOMg-AYBXZK xoVm JvmvrvcQa_kAobiQTc_NvIJvaLmh Zt'JxN OfeDPTxFMz AYBXZK ICWqRt' LWYfn,WXEa.TUjrFWE LWYfn/Zt'JxN TUjrFWE bKTF ICWqRt' AYBXZK/xoVm yFxOMg xoVm,OfeDPTxFMz;Zt'JxN-Zt'JxN:NvIJvaLmh xoVm;ICWqRt' bKTF?WXEa:Vaz?WXEa:eDNb JvmvrvcQa JvmvrvcQa TUjrFWE_eDNb OfeDPTxFMz!Zt'JxN yFxOMg ICWqRt' TUjrFWE ICWqRt';AYBXZK LWYfn.TUjrFWE WXEa kAobiQTc?xoVm JvmvrvcQa?AYBXZK.TUjrFWE xoVm bKTF/OfeDPTxFMz xoVm kAobiQTc LWYfn/TUjrFWE;xoVm:"));
+
+    }
+
+    [TestMethod]
     public void SumIntervalsTests()
     {
         Assert.AreEqual(7, Kyu4.SumIntervals(new (int, int)[] { (1, 4), (7, 10), (3, 5) }));

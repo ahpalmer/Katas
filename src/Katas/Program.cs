@@ -7,7 +7,12 @@ public class Program
     }
     public static void Main(string[] args)
     {
-        RunKyu5();
+        RunKyu4();
+    }
+
+    public static void RunKyu4()
+    {
+        Kyu4.Top3("in the lance-rack, an old's buckler, \na lean hack, and a greyhound for");
     }
 
     public static void RunKyu5()

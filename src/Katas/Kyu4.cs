@@ -2,12 +2,62 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Katas
 {
     public class Kyu4
     {
+        public static List<string> Top3(string s)
+        {
+            string noCapitals = s.ToLower();
+            Regex rgx = new Regex(@"[\p{P}](?!\w)|(?<!\w)[\p{P}]");
+            string noPunctuation = rgx.Replace(noCapitals, "");
+            Regex regexNoLines = new Regex(@"\n");
+            string noLines = regexNoLines.Replace(noPunctuation, " ");
+            Regex regexNoExtraSpaces = new Regex(@"\s+");
+            string noExtraSpaces = regexNoExtraSpaces.Replace(noLines, " ").Trim();
+
+            List<string> stringList = noExtraSpaces.Split(' ').ToList();
+            List<string> trimmedList = stringList.Where(s => s != "").ToList();
+            Dictionary<string, int> wordCount = new Dictionary<string, int>();
+            List<string> result = new List<string>();
+            if (trimmedList.Count == 0)
+            {
+                return result;
+            }
+            foreach (string word in trimmedList)
+            {
+                if (wordCount.ContainsKey(word))
+                {
+                    wordCount[word]++;
+                }
+                else
+                {
+                    wordCount.Add(word, 1);
+                }
+            }
+
+            var answer = wordCount.OrderByDescending(key => key.Value);
+            if (wordCount.Count < 3)
+            {
+                foreach (var item in answer)
+                {
+                    result.Add(item.Key);
+                }
+                return result;
+            }
+            else
+            {
+                foreach (var item in answer.Take(3))
+                {
+                    result.Add(item.Key);
+                }
+                return result;
+            }
+        }
+
         // There is a way to do this quickly.  Look at advent of code day 5 2023.
         // The brute force method would be to create an int[] with all ints between the given ranges and then count the int[]
         // I don't want to do that.  It wasn't performant in AOC D5 and I want to learn to do it better.
