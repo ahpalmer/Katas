@@ -11,6 +11,13 @@ namespace Katas
     {
         public static List<string> Top3(string s)
         {
+            // Brilliant regex: @"('*[a-z]'*)+"
+            //return Regex.Matches(s.ToLowerInvariant(), @"('*[a-z]'*)+")
+            //.GroupBy(match => match.Value)
+            //.OrderByDescending(g => g.Count())
+            //.Select(p => p.Key)
+            //.Take(3)
+            //.ToList();
             string noCapitals = s.ToLower();
             Regex rgx = new Regex(@"[\p{P}](?!\w)|(?<!\w)[\p{P}]");
             string noPunctuation = rgx.Replace(noCapitals, "");
