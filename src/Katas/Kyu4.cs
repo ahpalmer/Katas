@@ -18,23 +18,37 @@ namespace Katas
             //.Select(p => p.Key)
             //.Take(3)
             //.ToList();
-            string noCapitals = s.ToLower();
-            Regex rgx = new Regex(@"[\p{P}](?!\w)|(?<!\w)[\p{P}]");
-            string noPunctuation = rgx.Replace(noCapitals, "");
-            Regex regexNoLines = new Regex(@"\n");
-            string noLines = regexNoLines.Replace(noPunctuation, " ");
-            Regex regexNoExtraSpaces = new Regex(@"\s+");
-            string noExtraSpaces = regexNoExtraSpaces.Replace(noLines, " ").Trim();
 
-            List<string> stringList = noExtraSpaces.Split(' ').ToList();
-            List<string> trimmedList = stringList.Where(s => s != "").ToList();
+            //Regex rgx = new Regex(@"[\p{P}](?!\w)|(?<!\w)[\p{P}]");
+            //string noPunctuation = rgx.Replace(noCapitals, " ");
+            //Regex regexNoPunctuationTwo = new Regex(@"[\p{P}-[']]");
+            //string noPunctuationTwo = regexNoPunctuationTwo.Replace(noCapitals, " ");
+            //Regex regexNoLines = new Regex(@"[\r\n]");
+            //string noLines = regexNoLines.Replace(noPunctuationTwo, " ");
+            //Regex regexNoExtraSpaces = new Regex(@"\s+");
+            //string noExtraSpaces = regexNoExtraSpaces.Replace(noLines, " ").Trim();
+            //List<string> stringList = noExtraSpaces.Split(' ').ToList();
+            //List<string> trimmedList = stringList.Where(s => s != "").ToList();
+            //Dictionary<string, int> wordCount = new Dictionary<string, int>();
+            //List<string> result = new List<string>();
+
+            Console.WriteLine();
+            string noCapitals = s.ToLower();
+            List<string> allWords = new List<string>();
+            MatchCollection wordMatches = Regex.Matches(noCapitals, @"('*[a-z]'*)+");
+            foreach (Match match in wordMatches)
+            {
+                allWords.Add(match.ToString());
+            }
+
             Dictionary<string, int> wordCount = new Dictionary<string, int>();
             List<string> result = new List<string>();
-            if (trimmedList.Count == 0)
+
+            if (allWords.Count == 0)
             {
                 return result;
             }
-            foreach (string word in trimmedList)
+            foreach (string word in allWords)
             {
                 if (wordCount.ContainsKey(word))
                 {
@@ -47,22 +61,27 @@ namespace Katas
             }
 
             var answer = wordCount.OrderByDescending(key => key.Value);
-            if (wordCount.Count < 3)
+            foreach (var item in answer.Take(3))
             {
-                foreach (var item in answer)
-                {
-                    result.Add(item.Key);
-                }
-                return result;
+                result.Add(item.Key);
             }
-            else
-            {
-                foreach (var item in answer.Take(3))
-                {
-                    result.Add(item.Key);
-                }
-                return result;
-            }
+            return result;
+            //if (wordCount.Count < 3)
+            //{
+            //    foreach (var item in answer)
+            //    {
+            //        result.Add(item.Key);
+            //    }
+            //    return result;
+            //}
+            //else
+            //{
+            //    foreach (var item in answer.Take(3))
+            //    {
+            //        result.Add(item.Key);
+            //    }
+            //    return result;
+            //}
         }
 
         // There is a way to do this quickly.  Look at advent of code day 5 2023.
