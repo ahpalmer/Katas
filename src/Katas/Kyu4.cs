@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Katas
 {
     public class Kyu4
     {
+        public static List<int> TreeByLevels(Node node)
+        {
+            
+            return null;
+        }
+
+        public static void CreateNodes()
+        {
+            var nodes = new List<Node>();
+            Node one = new Node(null, null, 1);
+            Node two = new Node(null, one, 2);
+        }
+
         public static List<string> Top3(string s)
         {
             // Brilliant regex: @"('*[a-z]'*)+"
