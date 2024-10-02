@@ -13,6 +13,56 @@ namespace Katas;
 
 internal class Kyu5
 {
+    public static List<int[]> QuicksortAlgorithm(int[] data)
+    {
+        List<int[]> answer = new List<int[]>();
+        int icount = 1;
+        int jcount = 1;
+        bool done = false;
+        while (!done)
+        {
+            Quicksort snapshot = FindNextSnapshot(data, icount, jcount);
+            answer.Add(snapshot.data);
+            if (icount > jcount)
+            {
+                done = true;
+            }
+            icount = snapshot.icount;
+            jcount = snapshot.jcount;
+        }
+
+
+
+        return new List<int[]>();
+    }
+
+    public static Quicksort FindNextSnapshot(int[] data, int icount, int jcount)
+    {
+        int pivot = data[0];
+        int i = data[icount];
+        int j = data[data.Length - jcount];
+        List<int[]> answer = new List<int[]>();
+        while (!(i > pivot) || !(j < pivot))
+        {
+            if (j >= pivot)
+            {
+                jcount++;
+                j = data[data.Length - jcount];
+            }
+            if (i <= pivot)
+            {
+                icount++;
+                i = data[icount];
+            }
+        }
+
+        int temp = data[icount];
+        data[icount] = data[data.Length - jcount];
+        data[data.Length - jcount] = temp;
+        Quicksort snapshot = new Quicksort(data, icount, jcount);
+        return snapshot;
+    }
+
     // Time: 37 minutes
     public static string GetReadableTime(int seconds)
     {

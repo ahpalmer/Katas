@@ -16,6 +16,27 @@ internal class Kyu6
     {
     }
 
+    public static double[] Tribonacci(double[] signature, int n)
+    {
+        if (n == 0)
+        {
+            return new double[] { };
+        }
+        List<double> tribonacciList = new List<double>();
+        tribonacciList = tribonacciList.Append(signature[0]).ToList();
+        if (n == 1) { return tribonacciList.ToArray(); }
+        tribonacciList = tribonacciList.Append(signature[1]).ToList();
+        if (n == 2) { return tribonacciList.ToArray(); }
+        tribonacciList = tribonacciList.Append(signature[2]).ToList();
+        if (n == 3) { return tribonacciList.ToArray(); }
+        for (int i = 0; i < n - 3; i++)
+        {
+            tribonacciList = tribonacciList.Append(tribonacciList[i] + tribonacciList[i + 1] + tribonacciList[i + 2]).ToList();
+        }
+
+        return tribonacciList.ToArray();
+    }
+
     public long CalculateScrap(int[] scraps, int numberOfRobots)
     {
         List<double> doubleArrayScraps = scraps.Select(x => (double)x).ToList();

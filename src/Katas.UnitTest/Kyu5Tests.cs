@@ -10,6 +10,12 @@ namespace Katas.UnitTest;
 public class Kyu5Tests
 {
     [TestMethod]
+    public void QuickSortTests()
+    {
+
+    }
+
+    [TestMethod]
     public void GetReadableTimeTests()
     {
         Assert.AreEqual("00:00:00", Kyu5.GetReadableTime(0));
