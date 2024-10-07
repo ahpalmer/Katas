@@ -9,7 +9,24 @@ namespace Katas;
 
 internal class Kyu7
 {
-    public static int SquareDigits(int n)
+    public static Dictionary<string, int> get_animals_count(int legs_number, int heads_number, int horns_number)
+    {
+        int cows = horns_number / 2;
+        legs_number = legs_number - cows * 4;
+        heads_number = heads_number - cows;
+
+        int rabbits = (legs_number / 2) - heads_number;
+        int chickens = heads_number - rabbits;
+
+        Dictionary<string, int> answer = new Dictionary<string, int>();
+        answer.Add("cows", cows);
+        answer.Add("rabbits", rabbits);
+        answer.Add("chickens", chickens);
+
+        return answer;
+    }
+
+        public static int SquareDigits(int n)
     {
         string input = n.ToString();
         IEnumerable<double> doubleAnswer = input.Select(i => Math.Pow(Int32.Parse(i.ToString()), 2));

@@ -7,7 +7,7 @@ public class Program
     }
     public static void Main(string[] args)
     {
-        RunKyu6();
+        RunKyu5();
     }
 
     public static void RunKyu4()

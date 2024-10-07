@@ -6,6 +6,16 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void GetAnimalsCountTest()
+    {
+        var answer = Kyu7.get_animals_count(34, 11, 6);
+        Assert.AreEqual(3, answer["cows"]);
+        Assert.AreEqual(3, answer["rabbits"]);
+        Assert.AreEqual(5, answer["chickens"]);
+    }
+
+
+    [TestMethod]
     public void SquareDigitsTest()
     {
         Assert.AreEqual(811181, Kyu7.SquareDigits(9119));
