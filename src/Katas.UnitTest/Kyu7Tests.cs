@@ -6,6 +6,15 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void GetMiddleTest()
+    {
+        Assert.AreEqual("es", Kyu7.GetMiddle("test"));
+        Assert.AreEqual("t", Kyu7.GetMiddle("testing"));
+        Assert.AreEqual("dd", Kyu7.GetMiddle("middle"));
+        Assert.AreEqual("A", Kyu7.GetMiddle("A"));
+    }
+
+    [TestMethod]
     public void GetAnimalsCountTest()
     {
         var answer = Kyu7.get_animals_count(34, 11, 6);

@@ -9,6 +9,12 @@ namespace Katas;
 
 internal class Kyu7
 {
+    // Time: 14 mins
+    public static string GetMiddle(string s)
+    {
+        return s.Length % 2 == 0 ? s.Substring((s.Length / 2) - 1, 2): s.Substring(s.Length / 2, 1);
+    }
+
     public static Dictionary<string, int> get_animals_count(int legs_number, int heads_number, int horns_number)
     {
         int cows = horns_number / 2;
