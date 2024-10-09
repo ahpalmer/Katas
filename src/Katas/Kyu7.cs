@@ -9,6 +9,13 @@ namespace Katas;
 
 internal class Kyu7
 {
+    // Time: 17 mins
+    public static int BinaryArrayToNumber(int[] BinaryArray)
+    {
+        var binaryString = BinaryArray.ToList().Select(x => x.ToString()).Aggregate((i, j) => i + j);
+        return Convert.ToInt32(binaryString, 2);
+    }
+
     // Time: 14 mins
     public static string GetMiddle(string s)
     {

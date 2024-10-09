@@ -6,6 +6,20 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void BinaryArrayToNumberTest()
+    {
+        int[] Test1 = new int[] { 0, 0, 0, 0 };
+        int[] Test2 = new int[] { 1, 1, 1, 1 };
+        int[] Test3 = new int[] { 0, 1, 1, 0 };
+        int[] Test4 = new int[] { 0, 1, 0, 1 };
+
+        Assert.AreEqual(0, Kyu7.BinaryArrayToNumber(Test1));
+        Assert.AreEqual(15, Kyu7.BinaryArrayToNumber(Test2));
+        Assert.AreEqual(6, Kyu7.BinaryArrayToNumber(Test3));
+        Assert.AreEqual(5, Kyu7.BinaryArrayToNumber(Test4));
+    }
+
+    [TestMethod]
     public void GetMiddleTest()
     {
         Assert.AreEqual("es", Kyu7.GetMiddle("test"));
