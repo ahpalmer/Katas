@@ -9,6 +9,23 @@ namespace Katas;
 
 internal class Kyu7
 {
+    // Time: 5 minutes
+    public static bool ValidatePin(string pin)
+    {
+        if (pin.Length != 4 && pin.Length != 6)
+        {
+            return false;
+        }
+        foreach (char c in pin)
+        {
+            if (!Char.IsDigit(c))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Time: 17 mins
     public static int BinaryArrayToNumber(int[] BinaryArray)
     {

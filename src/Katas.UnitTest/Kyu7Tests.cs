@@ -6,6 +6,25 @@ namespace Katas.UnitTest;
 public class Kyu7Tests
 {
     [TestMethod]
+    public void ValidatePinTest()
+    {
+        Assert.AreEqual(false, Kyu7.ValidatePin("1"), "Wrong output for \"1\"");
+        Assert.AreEqual(false, Kyu7.ValidatePin("12"), "Wrong output for \"12\"");
+        Assert.AreEqual(false, Kyu7.ValidatePin("123"), "Wrong output for \"123\"");
+        Assert.AreEqual(false, Kyu7.ValidatePin("12345"), "Wrong output for \"12345\"");
+        Assert.AreEqual(false, Kyu7.ValidatePin("1234567"), "Wrong output for \"1234567\"");
+        Assert.AreEqual(false, Kyu7.ValidatePin("a234"), "Wrong output for \"a234\"");
+        Assert.AreEqual(false, Kyu7.ValidatePin(".234"), "Wrong output for \".234\"");
+        Assert.AreEqual(true, Kyu7.ValidatePin("1234"), "Wrong output for \"1234\"");
+        Assert.AreEqual(true, Kyu7.ValidatePin("0000"), "Wrong output for \"0000\"");
+        Assert.AreEqual(true, Kyu7.ValidatePin("1111"), "Wrong output for \"1111\"");
+        Assert.AreEqual(true, Kyu7.ValidatePin("123456"), "Wrong output for \"123456\"");
+        Assert.AreEqual(true, Kyu7.ValidatePin("098765"), "Wrong output for \"098765\"");
+        Assert.AreEqual(true, Kyu7.ValidatePin("000000"), "Wrong output for \"000000\"");
+        Assert.AreEqual(true, Kyu7.ValidatePin("090909"), "Wrong output for \"090909\"");
+
+    }
+    [TestMethod]
     public void BinaryArrayToNumberTest()
     {
         int[] Test1 = new int[] { 0, 0, 0, 0 };
