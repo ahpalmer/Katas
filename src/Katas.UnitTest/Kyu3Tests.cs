@@ -50,6 +50,78 @@ public class Kyu3Tests
                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                       {0, 0, 0, 1, 0, 0, 0, 0, 0, 1}};
         Assert.IsTrue(Kyu3.ValidateBattlefield(field3));
+
+        int[,] field4 = new int[10, 10]
+             {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                      {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                      {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                      {1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}};
+        Assert.IsFalse(Kyu3.ValidateBattlefield(field4));
+    }
+
+    [TestMethod]
+    public void TestIsShipInContact()
+    {
+        int[,] field = new int[10, 10]
+                     {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                      {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                      {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                      {1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}};
+        List<BattleShip> fleet = Kyu3.FindBattleShips(field);
+        Assert.IsTrue(Kyu3.IsShipInContact(fleet));
+
+        int[,] field2 = new int[10, 10]
+                     {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                      {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                      {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 1, 0, 0, 0, 1}};
+        List<BattleShip> fleet2 = Kyu3.FindBattleShips(field2);
+        Assert.IsFalse(Kyu3.IsShipInContact(fleet2));
+    }
+
+    [TestMethod]
+    public void TestIsCoordinateOccupied()
+    {
+        BattleShip alreadyThere = new BattleShip(0, 5, 2, "Right");
+        (int, int) newCoord = (0, 6);
+        Assert.AreEqual(true, Kyu3.IsCoordinateAlreadyOccupied(new List<BattleShip> { alreadyThere }, newCoord));
+    }
+
+    [TestMethod]
+    public void TestFindBattleShips()
+    {
+        int[,] field = new int[10, 10]
+                     {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                      {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                      {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                      {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                      {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+        List<BattleShip> fleet = Kyu3.FindBattleShips(field);
+        Assert.AreEqual(fleet.Count, 10);
     }
 
     [TestMethod]
