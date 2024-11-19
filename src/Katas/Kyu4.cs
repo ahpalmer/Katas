@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -11,6 +12,36 @@ namespace Katas
 {
     public class Kyu4
     {
+        public static string Add(string a, string b)
+        {
+            Console.WriteLine($"a: {a}, b: {b}");
+            string leftAnswer = "0";
+            if (a.Count() > 18 || b.Count() > 18)
+            {
+                string lastEighteenA = a.Length >= 18
+                    ? a.Substring(0, a.Length - 18)
+                    : a.PadLeft(18, '0');
+                string lastEighteenB = b.Length >= 18
+                    ? b.Substring(0, b.Length - 18)
+                    : b.PadLeft(18, '0');
+                leftAnswer = Add(lastEighteenA, lastEighteenB);
+                a = a.Substring(a.Length - 18, 18);
+                b = b.Substring(b.Length - 18, 18);
+            }
+            long answer = long.Parse(a) + long.Parse(b);
+            if (answer.ToString().Length > 18)
+            {
+                string answerStr = answer.ToString().Substring(1);
+                var tempRightDigits = leftAnswer.Substring(leftAnswer.Length - 3, 3);
+                var rightDigits = (Int32.Parse(tempRightDigits) + 1).ToString();
+
+                leftAnswer = leftAnswer.Substring(0, leftAnswer.Length - 3);
+                return leftAnswer + rightDigits + answerStr;
+            }
+
+            return (leftAnswer + answer.ToString()).TrimStart('0');
+        }
+
         public static List<int> TreeByLevels(Node node)
         {
             
