@@ -34,9 +34,18 @@ namespace Katas
                 string answerStr = answer.ToString().Substring(1);
                 var tempRightDigits = leftAnswer.Substring(leftAnswer.Length - 3, 3);
                 var rightDigits = (Int32.Parse(tempRightDigits) + 1).ToString();
+                if (rightDigits.Length < 3)
+                {
+                    rightDigits = rightDigits.PadLeft(3, '0');
+                }
 
                 leftAnswer = leftAnswer.Substring(0, leftAnswer.Length - 3);
                 return leftAnswer + rightDigits + answerStr;
+            }
+            if (answer.ToString().Length < 18)
+            {
+                string answerStr = answer.ToString().PadLeft(18, '0');
+                return (leftAnswer + answerStr).TrimStart('0');
             }
 
             return (leftAnswer + answer.ToString()).TrimStart('0');
