@@ -31,8 +31,6 @@ internal class Kyu5
             jcount = snapshot.jcount;
         }
 
-
-
         return new List<int[]>();
     }
 
