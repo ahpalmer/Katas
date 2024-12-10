@@ -6,6 +6,14 @@ namespace Katas.UnitTest;
 public class Kyu8Tests
 {
     [TestMethod]
+    public void TestOpposite()
+    {
+        Assert.AreEqual(-1, Kyu8.Opposite(1));
+        Assert.AreEqual(0, Kyu8.Opposite(0));
+        Assert.AreEqual(1, Kyu8.Opposite(-1));
+    }
+
+    [TestMethod]
     public void Test1()
     {
         CollectionAssert.AreEqual(new long[] { 1, 3, 2 }, Kyu8.Digitize(231));
