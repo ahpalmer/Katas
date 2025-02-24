@@ -6,6 +6,7 @@
 ##This is the C# Gitignore file.  Python is at the bottom
 # User-specific files
 *.rsuser
+**/*.suo
 *.suo
 *.user
 *.userosscache

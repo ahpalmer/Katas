@@ -56,7 +56,7 @@ internal class Kyu7
         return answer;
     }
 
-        public static int SquareDigits(int n)
+    public static int SquareDigits(int n)
     {
         string input = n.ToString();
         IEnumerable<double> doubleAnswer = input.Select(i => Math.Pow(Int32.Parse(i.ToString()), 2));
