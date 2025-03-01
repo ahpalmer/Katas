@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureTestFunctionKatas
+namespace AzureTestFunctionKatas.Services
 {
-    class QuadraticEquationLogic
+    class QuadraticEquationService
     {
     }
 }
