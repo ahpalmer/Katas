@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTestFunctionKatas", "AzureTestFunctionKatas.csproj", "{183321D3-4C61-4DB7-9883-CDE010DC1E48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTestFunctionKatas.Tests", "AzureTestFunctionKatas.Tests\AzureTestFunctionKatas.Tests.csproj", "{8B8AD43D-F5B7-4D32-BE08-857DAE6867E0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D79AABE2-D36E-501E-092D-7AF88322F346} = {D79AABE2-D36E-501E-092D-7AF88322F346}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTestFunctionKatas", "AzureTestFunctionKatas\AzureTestFunctionKatas.csproj", "{D79AABE2-D36E-501E-092D-7AF88322F346}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +16,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{183321D3-4C61-4DB7-9883-CDE010DC1E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{183321D3-4C61-4DB7-9883-CDE010DC1E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{183321D3-4C61-4DB7-9883-CDE010DC1E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{183321D3-4C61-4DB7-9883-CDE010DC1E48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B8AD43D-F5B7-4D32-BE08-857DAE6867E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B8AD43D-F5B7-4D32-BE08-857DAE6867E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B8AD43D-F5B7-4D32-BE08-857DAE6867E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B8AD43D-F5B7-4D32-BE08-857DAE6867E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D79AABE2-D36E-501E-092D-7AF88322F346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D79AABE2-D36E-501E-092D-7AF88322F346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D79AABE2-D36E-501E-092D-7AF88322F346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D79AABE2-D36E-501E-092D-7AF88322F346}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
