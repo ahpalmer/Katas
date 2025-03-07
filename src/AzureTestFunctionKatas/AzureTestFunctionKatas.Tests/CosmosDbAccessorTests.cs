@@ -6,45 +6,21 @@ using AzureTestFunctionKatas.Entities;
 namespace AzureTestFunctionKatas.Tests
 {
     [TestClass]
-    public class CosmosDBAccessorTests
+    public class CosmosDBAccessorTests : BaseCosmosDbTest
     {
-        private CosmosClient _cosmosClient;
         private CosmosDbAccessor<Product> _productAccessor;
-        private readonly string _databaseId = "TestDb";
-        private readonly string _containerId = "TestContainer";
-        private Database _database;
-        private Container _container;
+
+        [ClassInitialize]
+        public static async Task ClassInit(TestContext testContext)
+        {
+            // Call the base class initialization
+            await ClassInitialize(testContext);
+        }
 
         [TestInitialize]
         public async Task TestInitialize()
         {
-            // Connect to local emulator
-            // Note: The emulator must be running for these tests to work
-            _cosmosClient = new CosmosClient("https://localhost:8081",
-                "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
-                new CosmosClientOptions
-                {
-                    ConnectionMode = ConnectionMode.Gateway,
-                    ServerCertificateCustomValidationCallback = (cert, chain, sslPolicyErrors) => true // Trust emulator SSL cert
-                });
-
-            //using CosmosClient client = new(
-            //    accountEndpoint: "https://localhost:8081/",
-            //    authKeyOrResourceToken: "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="
-            //);
-
-            // Ensure database exists
-            DatabaseResponse databaseResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync(_databaseId);
-            _database = databaseResponse.Database;
-
-            // Ensure container exists with partition key path
-            ContainerResponse containerResponse = await _database.CreateContainerIfNotExistsAsync(
-                id: _containerId,
-                partitionKeyPath: "/categoryId",
-                throughput: 400); // Minimum throughput
-            _container = containerResponse.Container;
-
-            // Initialize the accessor we're testing
+            // Initialize the accessor we're testing using the shared client
             _productAccessor = new CosmosDbAccessor<Product>(_cosmosClient, _databaseId, _containerId);
 
             // Clean up any existing test data
@@ -55,27 +31,72 @@ namespace AzureTestFunctionKatas.Tests
         public async Task TestCleanup()
         {
             await CleanupTestDataAsync();
-            _cosmosClient.Dispose();
         }
+            //private CosmosClient _cosmosClient;
+            //private CosmosDbAccessor<Product> _productAccessor;
+            //private readonly string _databaseId = "TestDb";
+            //private readonly string _containerId = "TestContainer";
+            //private Database _database;
+            //private Container _container;
 
-        private async Task CleanupTestDataAsync()
-        {
-            // Query for all test products
-            string query = "SELECT * FROM c WHERE c.name LIKE 'Test%'";
-            var iterator = _container.GetItemQueryIterator<Product>(query);
+            //[TestInitialize]
+            //public async Task TestInitialize()
+            //{
+            //    // Connect to local emulator
+            //    // Note: The emulator must be running for these tests to work
+            //    _cosmosClient = new CosmosClient("https://localhost:8081",
+            //        "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+            //        new CosmosClientOptions
+            //        {
+            //            ConnectionMode = ConnectionMode.Gateway,
+            //            ServerCertificateCustomValidationCallback = (cert, chain, sslPolicyErrors) => true // Trust emulator SSL cert
+            //        });
 
-            // Delete all test products
-            while (iterator.HasMoreResults)
-            {
-                var response = await iterator.ReadNextAsync();
-                foreach (var product in response)
-                {
-                    await _container.DeleteItemAsync<Product>(product.id, new PartitionKey(product.categoryId));
-                }
-            }
-        }
+            //    // Ensure database exists
+            //    DatabaseResponse databaseResponse = await _cosmosClient.CreateDatabaseIfNotExistsAsync(_databaseId);
+            //    _database = databaseResponse.Database;
 
-        [TestMethod]
+            //    // Ensure container exists with partition key path
+            //    ContainerResponse containerResponse = await _database.CreateContainerIfNotExistsAsync(
+            //        id: _containerId,
+            //        partitionKeyPath: "/categoryId",
+            //        throughput: 400); // Minimum throughput
+            //    _container = containerResponse.Container;
+
+            //    // Initialize the accessor we're testing
+            //    _productAccessor = new CosmosDbAccessor<Product>(_cosmosClient, _databaseId, _containerId);
+
+            //    // Clean up any existing test data
+            //    await CleanupTestDataAsync();
+            //}
+
+            //[TestCleanup]
+            //public async Task TestCleanup()
+            //{
+            //    await CleanupTestDataAsync();
+            //    _cosmosClient.Dispose();
+            //}
+
+            //private async Task CleanupTestDataAsync()
+            //{
+            //    // Query for all test products
+            //    string query = "SELECT * FROM c WHERE c.name LIKE 'Test%'";
+            //    var iterator = _container.GetItemQueryIterator<Product>(query);
+
+            //    // Delete all test products
+            //    while (iterator.HasMoreResults)
+            //    {
+            //        var response = await iterator.ReadNextAsync();
+            //        foreach (var product in response)
+            //        {
+            //            await _container.DeleteItemAsync<Product>(product.id, new PartitionKey(product.categoryId));
+            //        }
+            //    }
+            //}
+
+
+
+            [TestMethod]
         public async Task AddItemAsync_ShouldAddProductToContainer()
         {
             // Arrange

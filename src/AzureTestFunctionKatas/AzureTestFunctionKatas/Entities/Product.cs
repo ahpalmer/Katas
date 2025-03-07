@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,9 @@ namespace AzureTestFunctionKatas.Entities
         public double price { get; set; }
 
         public string[] tags { get; set; }
+
+        // This captures the ETAG from CosmosDb
+        [JsonProperty(PropertyName = "_etag")]
+        public string ETag { get; set; }
     }
 }

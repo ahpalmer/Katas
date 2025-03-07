@@ -6,24 +6,24 @@ using System.Net;
 
 namespace AzureTestFunctionKatas.DataAccessLayer
 {
-    public class TestDataDbGenerator
+    public class TestDatabaseFunctions
     {
         private readonly ICosmosDbAccessor<Product> _cosmosDbAccessor;
         private readonly ILogger _logger;
 
-        public TestDataDbGenerator(
+        public TestDatabaseFunctions(
             ICosmosDbAccessor<Product> cosmosDbAccessor,
-            ILogger<TestDataDbGenerator> logger)
+            ILogger<TestDatabaseFunctions> logger)
         {
             _cosmosDbAccessor = cosmosDbAccessor;
             _logger = logger;
         }
 
-        [Function("TestDataDbGenerator")]
+        [Function("TestDataGenerator")]
         public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "TestDataDbGenerator")] HttpRequestData req)
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "TestDataGenerator")] HttpRequestData req)
         {
-            _logger.LogInformation("Running TestDataDbGenerator");
+            _logger.LogInformation("Running TestDataGenerator");
 
             List<Product> randomlyCreatedData = CreateTestData();
             List<Task> productSendToDB = new List<Task>();
@@ -44,6 +44,45 @@ namespace AzureTestFunctionKatas.DataAccessLayer
 
             _logger.LogInformation($"Product IDs sent to the database: {response.Body.ToString()}");
             return response;
+        }
+
+        [Function("UpdateProductData")]
+        public async Task<HttpResponseData> Run(
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "UpdateProductData")] 
+        HttpRequestData req,
+        string productId,
+        string partitionKey)
+        {
+            _logger.LogInformation("Running UpdateProductData {productId}", productId);
+
+            try
+            {
+                // Get the current product with its ETag
+                var product = await _cosmosDbAccessor.GetItemAsync(productId, partitionKey);
+                if (product == null)
+                {
+                    throw new KeyNotFoundException($"Product {productId} not found");
+                }
+
+                Random random = new Random();
+                double newPrice = random.Next(1, 11);
+                // Update the price
+                product.price= newPrice;
+
+                // Try to save with ETag check
+                await _cosmosDbAccessor.UpdateItemAsync(productId, product, partitionKey);
+                _logger.LogInformation("Product {productId} updated successfully", productId);
+
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+                response.WriteString(productId);
+
+                return response;
+            }
+            catch (ConcurrencyException)
+            {
+                throw new Exception($"The product {productId} was modified by another process");
+            }
         }
 
         public List<Product> CreateTestData()

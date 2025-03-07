@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos;
+using System.Data;
 
 namespace AzureTestFunctionKatas.DataAccessLayer;
 
@@ -45,11 +46,45 @@ public class CosmosDbAccessor<T> : ICosmosDbAccessor<T> where T : class
 
     public async Task UpdateItemAsync(string id, T item, string partitionKey)
     {
-        await _container.UpsertItemAsync(item, new PartitionKey(partitionKey));
+        // Get ETag using reflection (or use a more specific approach for your models)
+        var etagProperty = typeof(T).GetProperty("ETag");
+        string etag = etagProperty?.GetValue(item) as string;
+
+        // Create request options with the ETag if available
+        ItemRequestOptions requestOptions = null;
+        if (!string.IsNullOrEmpty(etag))
+        {
+            requestOptions = new ItemRequestOptions
+            {
+                IfMatchEtag = etag // This is the key for concurrency control
+            };
+        }
+
+        // Update with ETag condition
+        try
+        {
+            await _container.UpsertItemAsync(item, new PartitionKey(partitionKey), requestOptions);
+        }
+        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.PreconditionFailed)
+        {
+            // Handle the case where someone else updated the document
+            throw new ConcurrencyException($"The item with id {id} was modified by another process", ex);
+        }
+
+        //await _container.UpsertItemAsync(item, new PartitionKey(partitionKey));
     }
 
     public async Task DeleteItemAsync(string id, string partitionKey)
     {
         await _container.DeleteItemAsync<T>(id, new PartitionKey(partitionKey));
+    }
+}
+
+// 3. Define a custom exception for concurrency issues
+public class ConcurrencyException : Exception
+{
+    public ConcurrencyException(string message, Exception innerException)
+        : base(message, innerException)
+    {
     }
 }
