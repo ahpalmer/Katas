@@ -2,11 +2,11 @@
 
 namespace AzureTestFunctionKatas.DataAccessLayer;
 
-public class CosmosDBAccessor<T> where T : class
+public class CosmosDbAccessor<T> : ICosmosDbAccessor<T> where T : class
 {
     private readonly Container _container;
 
-    public CosmosDBAccessor(CosmosClient cosmosClient, string databaseId, string containerId)
+    public CosmosDbAccessor(CosmosClient cosmosClient, string databaseId, string containerId)
     {
         _container = cosmosClient.GetContainer(databaseId, containerId);
     }

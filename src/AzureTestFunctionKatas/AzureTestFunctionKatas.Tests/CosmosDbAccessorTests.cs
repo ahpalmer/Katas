@@ -9,7 +9,7 @@ namespace AzureTestFunctionKatas.Tests
     public class CosmosDBAccessorTests
     {
         private CosmosClient _cosmosClient;
-        private CosmosDBAccessor<Product> _productAccessor;
+        private CosmosDbAccessor<Product> _productAccessor;
         private readonly string _databaseId = "TestDb";
         private readonly string _containerId = "TestContainer";
         private Database _database;
@@ -45,7 +45,7 @@ namespace AzureTestFunctionKatas.Tests
             _container = containerResponse.Container;
 
             // Initialize the accessor we're testing
-            _productAccessor = new CosmosDBAccessor<Product>(_cosmosClient, _databaseId, _containerId);
+            _productAccessor = new CosmosDbAccessor<Product>(_cosmosClient, _databaseId, _containerId);
 
             // Clean up any existing test data
             await CleanupTestDataAsync();
