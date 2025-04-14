@@ -14,6 +14,15 @@ public sealed class EasyTests
     }
 
     [TestMethod]
+    public void IsValidTest()
+    {
+        Assert.AreEqual(true, easy.IsValid("()"));
+        Assert.AreEqual(true, easy.IsValid("()[]{}"));
+        Assert.AreEqual(false, easy.IsValid("(]"));
+        Assert.AreEqual(true, easy.IsValid("([])"));
+    }
+
+    [TestMethod]
     public void CountSymmetricIntegersTest()
     {
         Assert.AreEqual(9, easy.CountSymmetricIntegers(1, 100));

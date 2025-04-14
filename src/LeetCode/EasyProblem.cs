@@ -6,6 +6,60 @@ public class EasyProblem
     {
     }
 
+    // Slower than most people's code.  Try to use the Span<T> and ReadOnlySpan<T> classes next time to improve memory usage.
+    // Look at this line of code: Span<char> span = stackalloc char[s.Length];
+    // This creates a span (a very memory-cheap object) that targets a block of memory directly on the stack memory.  It acts as a stack (?) object
+    // Memory and time sensitive applications benefit greatly from understanding low-level data structures.  LinkedList was the wrong object to use for this problem, stack would have been better.
+    public bool IsValid(string s)
+    {
+        LinkedList<char> charValues = new LinkedList<char>(s.Select(s => (char)s).ToList());
+        LinkedListNode<char> currentNode = charValues.First;
+
+        while (currentNode != null)
+        {
+            if (currentNode.Value == '{' || currentNode.Value == '[' || currentNode.Value == '(')
+            {
+                if (currentNode.Next != null)
+                {
+                    currentNode = currentNode.Next;
+                    continue;
+                }
+                else { return false; }
+            }
+            else
+            {
+                if (currentNode.Previous != null && equivalentParenthesis(currentNode.Value, currentNode.Previous.Value))
+                {
+                    charValues.Remove(currentNode.Previous);
+                    if (currentNode.Next == null)
+                    {
+                        charValues.Remove(currentNode);
+                        break;
+                    }
+                    currentNode = currentNode.Next;
+                    charValues.Remove(currentNode.Previous!);
+                }
+                else { return false; }
+
+            }
+        }
+
+        if (charValues.Count == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool equivalentParenthesis(char currentNodeValue, char previousNodeValue)
+    {
+        if (currentNodeValue == ')' && previousNodeValue == '(') { return true; }
+        else if (currentNodeValue == '}' && previousNodeValue == '{') { return true; }
+        else if (currentNodeValue == ']' && previousNodeValue == '[') { return true; }
+        else { return false; }
+    }
+
+    // Done but the efficiency is pretty bad.  Test efficiency with competitive coding test.
     public int CountSymmetricIntegers(int low, int high)
     {
         List<int> answers = new List<int>();
