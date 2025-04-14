@@ -10,6 +10,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Katas.UnitTest", "Katas.Uni
 		{C0AD74AA-8675-47D4-9693-7FA5BF1A6DFC} = {C0AD74AA-8675-47D4-9693-7FA5BF1A6DFC}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetCode", "LeetCode\LeetCode.csproj", "{07C11730-DB3A-4A9B-9154-A8C0389DC854}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeetCode.UnitTest", "LeetCode.UnitTest\LeetCode.UnitTest.csproj", "{D768BFEE-60E0-4832-8719-CAAD4567E126}"
+	ProjectSection(ProjectDependencies) = postProject
+		{07C11730-DB3A-4A9B-9154-A8C0389DC854} = {07C11730-DB3A-4A9B-9154-A8C0389DC854}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +31,14 @@ Global
 		{A1A22185-A4D3-4628-A529-165F89DEBA7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1A22185-A4D3-4628-A529-165F89DEBA7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1A22185-A4D3-4628-A529-165F89DEBA7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07C11730-DB3A-4A9B-9154-A8C0389DC854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07C11730-DB3A-4A9B-9154-A8C0389DC854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07C11730-DB3A-4A9B-9154-A8C0389DC854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07C11730-DB3A-4A9B-9154-A8C0389DC854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D768BFEE-60E0-4832-8719-CAAD4567E126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D768BFEE-60E0-4832-8719-CAAD4567E126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D768BFEE-60E0-4832-8719-CAAD4567E126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D768BFEE-60E0-4832-8719-CAAD4567E126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
