@@ -6,6 +6,49 @@ public class EasyProblem
     {
     }
 
+    // Don't use Linq.  It's fairly slow in these situations
+    public string LongestCommonPrefix(string[] strs)
+    {
+        if (strs.Count() == 0) { return ""; }
+        if (strs.Count() == 1) { return strs[0]; }
+        var stringList = strs.ToList();
+        int shortestString = stringList.Select(s => s.Length).Min();
+        int finalCount = shortestString;
+        for (int i = 0; i < shortestString; i++)
+        {
+            var list = stringList.Select(s => s[i]).Distinct().ToList();
+            if (list.Count > 1)
+            {
+                finalCount = i;
+                break;
+            }
+        }
+
+        return stringList[0].Substring(0, finalCount);
+    }
+
+    //Best version of LongestCommonPrefix:
+    //public string LongestCommonPrefix(string[] strs)
+    //{
+    //    if (strs == null || strs.Length == 0)
+    //        return "";
+
+    //    string prefix = strs[0];
+
+    //    for (int i = 1; i < strs.Length; i++)
+    //    {
+    //        while (!strs[i].StartsWith(prefix))
+    //        {
+    //            prefix = prefix.Substring(0, prefix.Length - 1);
+
+    //            if (prefix == "")
+    //                return "";
+    //        }
+    //    }
+
+    //    return prefix;
+    //}
+
     // Slower than most people's code.  Try to use the Span<T> and ReadOnlySpan<T> classes next time to improve memory usage.
     // Look at this line of code: Span<char> span = stackalloc char[s.Length];
     // This creates a span (a very memory-cheap object) that targets a block of memory directly on the stack memory.  It acts as a stack (?) object

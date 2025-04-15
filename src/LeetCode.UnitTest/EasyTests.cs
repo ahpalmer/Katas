@@ -14,6 +14,16 @@ public sealed class EasyTests
     }
 
     [TestMethod]
+    public void LongestCommonPrefixTest()
+    {
+        Assert.AreEqual("fl", easy.LongestCommonPrefix(["flower", "flow", "flight"]));
+        Assert.AreEqual("", easy.LongestCommonPrefix(["dog", "racecar", "car"]));
+        Assert.AreEqual("a", easy.LongestCommonPrefix(["a"]));
+        Assert.AreEqual("a", easy.LongestCommonPrefix(["a", "ab"]));
+        Assert.AreEqual("", easy.LongestCommonPrefix(["", ""]));
+    }
+
+    [TestMethod]
     public void IsValidTest()
     {
         Assert.AreEqual(true, easy.IsValid("()"));
