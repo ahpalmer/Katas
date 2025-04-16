@@ -6,6 +6,70 @@ public class EasyProblem
     {
     }
 
+    // Did this correctly.  Good time and memory usage.
+    public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+    {
+        ListNode answer = new ListNode();
+        if (list1 == null)
+        {
+            return list2;
+        }
+        if (list2 == null)
+        {
+            return list1;
+        }
+
+        answer = SortRecursion(list1, list2);
+
+        return answer;
+    }
+
+    public ListNode SortRecursion(ListNode node1, ListNode node2)
+    {
+        ListNode answer = new ListNode();
+        if (node1 != null && node2 != null)
+        {
+            if (node1.val <= node2.val)
+            {
+                answer = node1;
+                if (node1.next == null)
+                {
+                    answer.next = node2;
+                    return answer;
+                }
+                node1 = node1.next!;
+                answer.next = SortRecursion(node1, node2);
+            }
+            else
+            {
+                answer = node2;
+                if (node2.next == null)
+                {
+                    answer.next = node1;
+                    return answer;
+                }
+                node2 = node2.next!;
+                answer.next = SortRecursion(node1, node2);
+            }
+        }
+
+        return answer;
+    }
+
+    public int[] GetTotalValues(ListNode list)
+    {
+        List<int> values = new List<int>();
+        if (list == null) { return [ 0 ]; }
+        values.Add(list.val);
+        ListNode next = new ListNode();
+        while(list.next != null)
+        {
+            next = next.next;
+            values.Add(next.val);
+        }
+        return values.ToArray();
+    }
+
     // Don't use Linq.  It's fairly slow in these situations
     public string LongestCommonPrefix(string[] strs)
     {
@@ -128,3 +192,15 @@ public class EasyProblem
         return answers.Count;
     }
 }
+
+
+// Definition for singly-linked list.
+public class ListNode {
+    public int val;
+    public ListNode next;
+    public ListNode(int val=0, ListNode next=null) {
+        this.val = val;
+        this.next = next;
+    }
+}
+
