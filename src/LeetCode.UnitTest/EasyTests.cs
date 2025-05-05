@@ -14,6 +14,14 @@ public sealed class EasyTests
     }
 
     [TestMethod]
+    public void RemoveDuplicatesTest()
+    {
+        Assert.AreEqual(2, easy.RemoveDuplicatesOne(new int[] { 1, 1, 2 }));
+        Assert.AreEqual(5, easy.RemoveDuplicatesOne(new int[] { 1, 1, 2, 4, 4, 5, 6 }));
+        Assert.AreEqual(5, easy.RemoveDuplicatesTwo(new int[] { 1, 1, 2, 4, 4, 5, 6 }));
+    }
+
+    [TestMethod]
     public void MergeTwoListsTest()
     {
         // Arrange:

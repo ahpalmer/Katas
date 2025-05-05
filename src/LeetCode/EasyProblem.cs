@@ -6,6 +6,58 @@ public class EasyProblem
     {
     }
 
+    public int RemoveDuplicatesBestAnswer(int[] nums)
+    {
+        int indx = 1;
+        int cur = nums[0];
+        for (int i = 1; i < nums.Length; i++)
+        {
+            if (nums[i - 1] == nums[i])
+            {
+                continue;
+            }
+            else
+            {
+                nums[indx] = nums[i];
+                indx++;
+            }
+        }
+        return indx;
+    }
+
+    public int RemoveDuplicatesOne(int[] nums)
+    {
+        List<int> ints = nums.Distinct().ToList();
+        for (int i = 0; i < ints.Count(); i++)
+        {
+            nums[i] = ints[i];
+        }
+        return ints.Distinct().Count();
+    }
+
+    public int RemoveDuplicatesTwo(int[] nums)
+    {
+        Span<int> stack = stackalloc int[nums.Count()];
+        int stackPointer = 0;
+
+        stack[stackPointer] = nums[0];
+        stackPointer++;
+        for (int i = 1; i < nums.Count(); i++)
+        {
+            if (nums[i] == stack[stackPointer - 1])
+            {
+                continue;
+            }
+            else
+            {
+                stack[stackPointer] = nums[i];
+                stackPointer++;
+            }
+        }
+        return stackPointer;
+    }
+
+
     // Did this correctly.  Good time and memory usage.
     public ListNode MergeTwoLists(ListNode list1, ListNode list2)
     {
