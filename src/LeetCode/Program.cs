@@ -6,13 +6,17 @@ public class Program
 {
     static void Main(string[] args)
     {
-        EasyProblem easy = new EasyProblem();
-        Console.WriteLine("First Test:");
-        var result = TestMemoryUsage<int>(() => easy.RemoveDuplicatesOne(new int[] { 1, 1, 2, 4, 4, 5, 6 }));
-        Console.WriteLine($"first test answer: {result}");
-        Console.WriteLine("Second Test:");
-        var result2 = TestMemoryUsage<int>(() => easy.RemoveDuplicatesTwo(new int[] { 1, 1, 2, 4, 4, 5, 6 }));
-        Console.WriteLine($"second test answer: {result2}");
+        //EasyProblem easy = new EasyProblem();
+        //Console.WriteLine("First Test:");
+        //var result = TestMemoryUsage<int>(() => easy.RemoveDuplicatesOne(new int[] { 1, 1, 2, 4, 4, 5, 6 }));
+        //Console.WriteLine($"first test answer: {result}");
+        //Console.WriteLine("Second Test:");
+        //var result2 = TestMemoryUsage<int>(() => easy.RemoveDuplicatesTwo(new int[] { 1, 1, 2, 4, 4, 5, 6 }));
+        //Console.WriteLine($"second test answer: {result2}");
+
+        MediumProblem medium = new MediumProblem();
+        Console.WriteLine("Medium Test:");
+        
     }
 
     public static T TestMemoryUsage<T>(Func<T> methodToTest)
