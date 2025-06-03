@@ -18,6 +18,17 @@ public class MediumTests
     }
 
     [TestMethod]
+    public void LengthOfLongestSubstringTest()
+    {
+        // Arrange:
+        Assert.AreEqual(3, _medium.LengthOfLongestSubstring("abcabcbb"));
+        Assert.AreEqual(1, _medium.LengthOfLongestSubstring("bbbbb"));
+        Assert.AreEqual(3, _medium.LengthOfLongestSubstring("pwwkew"));
+        Assert.AreEqual(0, _medium.LengthOfLongestSubstring(""));
+        Assert.AreEqual(2, _medium.LengthOfLongestSubstring("au"));
+    }
+
+    [TestMethod]
     public void AddTwoNumbersTest()
     {
         // Arrange:
