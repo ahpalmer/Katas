@@ -1,9 +1,71 @@
-﻿namespace LeetCode;
+﻿using System.Numerics;
+
+namespace LeetCode;
 
 public class EasyProblem
 {
     public EasyProblem()
     {
+    }
+
+    // First do this how you would do it at work, then try to do some funky optimization.
+    public int RemoveElementBasic(ref int[] nums, int val)
+    {
+        int length = nums.Length;
+        List<int> numsList = nums.ToList();
+        numsList.RemoveAll(x => x == val);
+        int answer = numsList.Count;
+        for (int i = numsList.Count; i < nums.Length; i++)
+        {
+            numsList.Add(0);
+        }
+        nums = numsList.ToArray();
+        return answer;
+    }
+
+    // Funky Optimization
+    public int RemoveElement(ref int[] nums, int val)
+    {
+        int endCount = nums.Length;
+        int negativeIndex = 1;
+        int finalCount = 0;
+        for (int i = 0; i < endCount; i++)
+        {
+            if (nums[i] == val)
+            {
+                if (nums.Length == i + negativeIndex)
+                {
+                }
+                else
+                {
+                    nums[i] = nums[^negativeIndex];
+                    nums[^negativeIndex] = val;
+                    negativeIndex++;
+                    i--;
+                    endCount--;
+                }
+            }
+            else
+            {
+                finalCount++;
+            }
+        }
+
+        return finalCount;
+    }
+
+    // LeetCode answer:
+    public int RemoveElementLeetcode(ref int[] nums, int val)
+    {
+        int k = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (nums[i] != val)
+            {
+                nums[k++] = nums[i];
+            }
+        }
+        return k;
     }
 
     public int RemoveDuplicatesBestAnswer(int[] nums)

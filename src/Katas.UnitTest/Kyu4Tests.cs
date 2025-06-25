@@ -10,6 +10,127 @@ namespace Katas.UnitTest;
 public class Kyu4Tests
 {
     [TestMethod]
+    public void TestRankingSystemProgress()
+    {
+        // Arrange
+        Kyu4.User userOne = new Kyu4.User();
+        userOne.rank = -8;
+        Kyu4.User userTwo = new Kyu4.User();
+        userTwo.rank = -8;
+        Kyu4.User userThree = new Kyu4.User();
+        userThree.rank = -8;
+        Kyu4.User userFour = new Kyu4.User();
+        userFour.rank = 4;
+        Kyu4.User userFive = new Kyu4.User();
+        userFive.rank = 8;
+        userFive.progress = 0;
+        Kyu4.User userSix = new Kyu4.User();
+        userSix.rank = 4;
+        Kyu4.User userSeven = new Kyu4.User();
+        userSeven.rank = -8;
+        Kyu4.User userEight = new Kyu4.User();
+        userEight.rank = 7;
+        userEight.progress = 91;
+
+        // Act
+        userOne.incProgress(-7);
+        userTwo.incProgress(-6);
+        userThree.incProgress(-5);
+        userFour.incProgress(5);
+        userFive.incProgress(8);
+        userSix.incProgress(2);
+        userSeven.incProgress(-8);
+        userEight.incProgress(8);
+
+        // Assert
+        Assert.AreEqual(10, userOne.progress);
+        Assert.AreEqual(-8, userOne.rank);
+        Assert.AreEqual(40, userTwo.progress);
+        Assert.AreEqual(-8, userTwo.rank);
+        Assert.AreEqual(90, userThree.progress);
+        Assert.AreEqual(-8, userThree.rank);
+        Assert.AreEqual(10, userFour.progress);
+        Assert.AreEqual(4, userFour.rank);
+        Assert.AreEqual(0, userFive.progress);
+        Assert.AreEqual(8, userFive.rank);
+        Assert.AreEqual(0, userSix.progress);
+        Assert.AreEqual(4, userSix.rank);
+        Assert.AreEqual(3, userSeven.progress);
+        Assert.AreEqual(-8, userSeven.rank);
+        Assert.AreEqual(0, userEight.progress);
+        Assert.AreEqual(8, userEight.rank);
+    }
+
+    [TestMethod]
+    public void TestRankingSystemRanks()
+    {
+        // Arrange
+        Kyu4.User userOne = new Kyu4.User();
+        userOne.rank = -8;
+        Kyu4.User userTwo = new Kyu4.User();
+        userTwo.rank = -1;
+        Kyu4.User userThree = new Kyu4.User();
+        userThree.rank = 1;
+        Kyu4.User userFour = new Kyu4.User();
+        userFour.rank = 8;
+        Kyu4.User userFive = new Kyu4.User();
+        userFive.rank = -8;
+
+        // Act
+        userOne.incProgress(-4);
+        userTwo.incProgress(4);
+        userThree.incProgress(5);
+        userFour.incProgress(8);
+        userFive.incProgress(3);
+
+        // Assert
+        Assert.AreEqual(-7, userOne.rank);
+        Assert.AreEqual(1, userTwo.rank);
+        Assert.AreEqual(2, userThree.rank);
+        Assert.AreEqual(8, userFour.rank);
+        Assert.AreEqual(3, userFive.rank);
+    }
+
+    [TestMethod]
+    public void TestRankingSystemMultiple()
+    {
+        Kyu4.User userOne = new Kyu4.User();
+        userOne.rank = -8;
+
+        userOne.incProgress(1);
+        Assert.AreEqual(-2, userOne.rank);
+        Assert.AreEqual(40, userOne.progress);
+
+        userOne.incProgress(1);
+        Assert.AreEqual(-2, userOne.rank);
+        Assert.AreEqual(80, userOne.progress);
+
+        userOne.incProgress(1);
+        Assert.AreEqual(-1, userOne.rank);
+        Assert.AreEqual(20, userOne.progress);
+
+        userOne.incProgress(1);
+        Assert.AreEqual(-1, userOne.rank);
+        Assert.AreEqual(30, userOne.progress);
+
+        userOne.incProgress(1);
+        Assert.AreEqual(-1, userOne.rank);
+        Assert.AreEqual(40, userOne.progress);
+
+        userOne.incProgress(2);
+        Assert.AreEqual(-1, userOne.rank);
+        Assert.AreEqual(80, userOne.progress);
+
+        userOne.incProgress(2);
+        Assert.AreEqual(1, userOne.rank);
+        Assert.AreEqual(20, userOne.progress);
+
+        userOne.incProgress(-1);
+        Assert.AreEqual(1, userOne.rank);
+        Assert.AreEqual(21, userOne.progress);
+    }
+
+    [TestMethod]
     public void TestAdd()
     {
         // Test the kyu4 method Add(string a, string b)

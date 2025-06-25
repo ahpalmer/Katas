@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.WebSockets;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -12,6 +13,85 @@ namespace Katas
 {
     public class Kyu4
     {
+        // Codewars style ranking system
+        public class User
+        {
+            public int rank;
+            public int progress = 0;
+
+            public void incProgress(int actRank)
+            {
+                Console.WriteLine($"rank: {rank.ToString()}, progress: {progress.ToString()}, actRank: {actRank.ToString()}");
+                if (actRank > 8 || actRank < -8 || actRank == 0)
+                {
+                    throw new ArgumentException();
+                }
+                int diff;
+                if (rank == 8)
+                {
+                    progress = 0;
+                    diff = 3;
+                }
+                else if (rank < 0 && actRank > 0)
+                {
+                    diff = rank - actRank + 1;
+                }
+                else if (rank > 0 && actRank < 0)
+                {
+                    diff = rank - actRank - 1;
+                }
+                else
+                {
+                    diff = rank - actRank;
+                }
+
+                if (diff < 2)
+                {
+                    AdvanceProgress(diff);
+                }
+
+            }
+
+            public void AdvanceProgress(int diff)
+            {
+                if (diff == 0)
+                {
+                    progress = progress + 3;
+                    if (progress > 100) { ProgressOverOneHundred(); }
+                }
+                else if (diff == 1)
+                {
+                    progress = progress + 1;
+                    if (progress > 100) { ProgressOverOneHundred(); }
+                }
+                else
+                {
+                    progress = progress + (((int)Math.Pow(diff, 2) * 10));
+                    if (progress > 100) { ProgressOverOneHundred(); }
+                }
+            }
+
+            public void ProgressOverOneHundred()
+            {
+                int permanentProgress = progress;
+                for (int i = 0; i < permanentProgress / 100; i++)
+                {
+                    rank++;
+                    progress = progress - 100;
+                    if (rank >=8)
+                    {
+                        rank = 8;
+                        progress = 0;
+                    }
+
+                    if (rank == 0)
+                    {
+                        rank++;
+                    }
+                }
+            }
+        }
+
         public static string Add(string a, string b)
         {
             Console.WriteLine($"a: {a}, b: {b}");

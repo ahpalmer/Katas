@@ -14,6 +14,39 @@ public sealed class EasyTests
     }
 
     [TestMethod]
+    public void RemoveElementBasicTest()
+    {
+        int[] arrayOne = new int[] { 2, 3, 4, 0, 2 };
+        Assert.AreEqual(4, easy.RemoveElementBasic(ref arrayOne, 3));
+        CollectionAssert.AreEqual(new int[] { 2, 4, 0, 2, 0 }, arrayOne);
+        int[] arrayTwo = new int[] { 0, 1, 2, 2, 3, 0, 4, 2 };
+        Assert.AreEqual(5, easy.RemoveElementBasic(ref arrayTwo, 2));
+        CollectionAssert.AreEqual(new int[] { 0, 1, 3, 0, 4, 0, 0, 0 }, arrayTwo);
+    }
+
+    [TestMethod]
+    public void RemoveElementTest()
+    {
+        int[] arrayOne = new int[] { 2, 3, 4, 0, 2 };
+        Assert.AreEqual(4, easy.RemoveElement(ref arrayOne, 3));
+        CollectionAssert.AreEqual(new int[] { 2, 2, 4, 0, 3 }, arrayOne);
+        int[] arrayTwo = new int[] { 0, 1, 2, 2, 3, 0, 4, 2 };
+        Assert.AreEqual(5, easy.RemoveElement(ref arrayTwo, 2));
+        CollectionAssert.AreEqual(new int[] { 0, 1, 4, 0, 3, 2, 2, 2 }, arrayTwo);
+    }
+
+    [TestMethod]
+    public void RemoveElementTestLeetCode()
+    {
+        int[] arrayOne = new int[] { 2, 3, 4, 0, 2 };
+        Assert.AreEqual(4, easy.RemoveElementLeetcode(ref arrayOne, 3));
+        CollectionAssert.AreEqual(new int[] { 2, 4, 0, 2, 2 }, arrayOne);
+        int[] arrayTwo = new int[] { 0, 1, 2, 2, 3, 0, 4, 2 };
+        Assert.AreEqual(5, easy.RemoveElementLeetcode(ref arrayTwo, 2));
+        CollectionAssert.AreEqual(new int[] { 0, 1, 3, 0, 4, 0, 4, 2 }, arrayTwo);
+    }
+
+    [TestMethod]
     public void RemoveDuplicatesTest()
     {
         Assert.AreEqual(2, easy.RemoveDuplicatesOne(new int[] { 1, 1, 2 }));
@@ -40,6 +73,7 @@ public sealed class EasyTests
 
         CollectionAssert.AreEqual(GetTotalValues(answerListNodeOne), GetTotalValues(easy.MergeTwoLists(listOneNodeOne, listTwoNodeOne)));
     }
+
     public int[] GetTotalValues(ListNode list)
     {
         List<int> values = new List<int>();
