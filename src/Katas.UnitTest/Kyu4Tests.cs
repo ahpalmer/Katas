@@ -10,6 +10,17 @@ namespace Katas.UnitTest;
 public class Kyu4Tests
 {
     [TestMethod]
+    public void TestNextSmaller ()
+    {
+        Assert.AreEqual(12, Kyu4.NextSmaller(21));
+        Assert.AreEqual(790, Kyu4.NextSmaller(907));
+        Assert.AreEqual(513, Kyu4.NextSmaller(531));
+        Assert.AreEqual(-1, Kyu4.NextSmaller(1027));
+        Assert.AreEqual(414, Kyu4.NextSmaller(441));
+        Assert.AreEqual(123456789, Kyu4.NextSmaller(123456798));
+    }
+
+    [TestMethod]
     public void TestRankingSystemProgress()
     {
         // Arrange

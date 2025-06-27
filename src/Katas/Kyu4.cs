@@ -1,18 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Net.WebSockets;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Text.RegularExpressions;
 
 namespace Katas
 {
     public class Kyu4
     {
+        public static long NextSmaller(long n)
+        {
+            List<int> allDigits = n.ToString().ToCharArray().Select(c => c - '0').ToList();
+            List<int> rightDigitsComplete = new List<int>();
+
+            int lowestNum = allDigits.Last();
+            for (int i = allDigits.Count - 2; i >= 0; i--)
+            {
+                if (allDigits[i] > lowestNum)
+                {
+                    if (i == 0)
+                    {
+                        rightDigitsComplete = OrganizeRightDigits(allDigits.GetRange(i, allDigits.Count - i), true);
+                        allDigits.RemoveRange(i, allDigits.Count - i);
+                        break;
+                    }
+                    else
+                    {
+                        rightDigitsComplete = OrganizeRightDigits(allDigits.GetRange(i, allDigits.Count - i));
+                        allDigits.RemoveRange(i, allDigits.Count - i);
+                        break;
+                    }
+                }
+                else if (allDigits[i] < lowestNum)
+                {
+                    lowestNum = allDigits[i];
+                }
+            }
+            allDigits.AddRange(rightDigitsComplete);
+            long answer = long.Parse(string.Join("", allDigits));
+            if (answer == n)
+            { return -1; }
+            else
+            { return answer; }
+        }
+
+        public static List<int> OrganizeRightDigits(List<int> rightDigits, bool isFirstDigit = false)
+        {
+            int nextLowNumber = FindNextLowestNumber(rightDigits, isFirstDigit);
+            if (nextLowNumber == -1)
+            {
+                return rightDigits;
+            }
+            rightDigits.Remove(nextLowNumber);
+            rightDigits.Sort();
+            rightDigits.Reverse();
+            rightDigits.Insert(0, nextLowNumber);
+            return rightDigits;
+        }
+
+        public static int FindNextLowestNumber(List<int> rightDigits, bool isFirstDigit)
+        {
+            int firstDigit = rightDigits.First();
+            int smallestDiff = rightDigits.Select(i => firstDigit - i).Where(a => a > 0).Min();
+            if (isFirstDigit && (firstDigit - smallestDiff == 0))
+            {
+                Console.WriteLine("smallest number 0");
+                return -1;
+            }
+            return firstDigit - smallestDiff;
+        }
+
         // Codewars style ranking system
         public class User
         {
