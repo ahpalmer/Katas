@@ -6,6 +6,13 @@ namespace Katas.UnitTest;
 public class Kyu8Tests
 {
     [TestMethod]
+    public void TestBoolToWord()
+    {
+        Assert.AreEqual("Yes", Kyu8.boolToWord(true));
+        Assert.AreEqual("No", Kyu8.boolToWord(false));
+    }
+
+    [TestMethod]
     public void TestOpposite()
     {
         Assert.AreEqual(-1, Kyu8.Opposite(1));
