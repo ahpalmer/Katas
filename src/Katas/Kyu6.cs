@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -14,6 +15,71 @@ internal class Kyu6
     //Need a constructor for unit tests.  Not actually sure if this is true but it works
     internal Kyu6()
     {
+    }
+
+    public int Fruit(List<string[]> reels, int[] spins)
+    {
+        List<SlotImages> slotImages = new List<SlotImages>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            string image = reels[i][spins[i]];
+            SlotImages tempSlotImage = (SlotImages)Enum.Parse(typeof(SlotImages), image);
+            slotImages.Add(tempSlotImage);
+        }
+
+        if (slotImages.Distinct().Count() == 3)
+        {
+            return 0;
+        }
+        if (slotImages.Distinct().Count() == 1)
+        {
+            int placement = (int)Math.Log2((int)slotImages[0]) + 1;
+            return placement * 10;
+        }
+        else if (slotImages.Distinct().Count() == 2)
+        {
+            int sum = slotImages.Sum(image => (int)image);
+            SlotImages finalImage = (SlotImages)sum;
+            if (sum >= 512 && sum <= 1023)
+            {
+                finalImage = finalImage - 512;
+                int placement = (int)Math.Log2((int)finalImage);
+                return placement * 2;
+            }
+            else if (sum == 1024)
+            {
+                return 18;
+            }
+            else if (sum > 1024)
+            {
+                return 10;
+            }
+            else
+            {
+                finalImage = slotImages.GroupBy(image => image).Where(group => group.Count() > 1).SelectMany(g => g).ToList().First();
+                int placement = (int)Math.Log2((int)slotImages[0]) + 1;
+                return placement;
+            }
+        }
+
+        return 0;
+    }
+
+    public enum SlotImages
+    {
+        None = 0,    // 00000000000
+        Jack = 1,    // 00000000001
+        Queen = 2,   // 00000000010
+        King = 4,    // 00000000100
+        Bar = 8,     // 00000001000
+        Cherry = 16, // 00000010000
+        Seven = 32,  // 00000100000
+        Shell = 64,  // 00001000000
+        Bell = 128,  // 00010000000
+        Star = 256,  // 00100000000
+        Wild = 512,  // 01000000000
+        DoubleWild = 1024, // 10000000000
     }
 
     public static double[] Tribonacci(double[] signature, int n)
