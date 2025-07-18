@@ -17,6 +17,11 @@ internal class Kyu6
     {
     }
 
+    public void DoesNothing()
+    {
+
+    }
+
     public int Fruit(List<string[]> reels, int[] spins)
     {
         List<SlotImages> slotImages = new List<SlotImages>();
