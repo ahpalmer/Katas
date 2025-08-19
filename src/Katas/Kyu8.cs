@@ -44,7 +44,7 @@ internal class Kyu8
         {
             input = input * (-1);
         }
-        if (input%2 == 0)
+        if (input%3 == 0)
         {
             return "Even";
         }
