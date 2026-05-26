@@ -18,7 +18,7 @@ public class MyHashMap<TKey, TValue> where TKey : notnull {
     
     public void Put(TKey key, TValue value)
     {
-        int modulo = key.GetHashCode() % this.Size;
+        int modulo = (key.GetHashCode() & 0x7FFFFFFF) % this.Size;
         if (EntryBuckets[modulo] == null)
         {
             EntryBuckets[modulo] = new LinkedList<KeyValuePair<TKey, TValue>>();
@@ -34,7 +34,7 @@ public class MyHashMap<TKey, TValue> where TKey : notnull {
     
     public TValue Get(TKey key)
     {
-        int modulo = key.GetHashCode() % this.Size;
+        int modulo = (key.GetHashCode() & 0x7FFFFFFF) % this.Size;
 
     }
     
@@ -49,15 +49,21 @@ public class MyHashMap<TKey, TValue> where TKey : notnull {
         {
             throw new ArgumentException("This method was called incorrectly, there is a bug in the hashmap");
         }
-        // This is wrong, fix it
-        var oldEntryBucket = new LinkedList<KeyValuePair<TKey, TValue>>(this.EntryBuckets);
+        var oldBuckets = this.EntryBuckets;
         this.Size = this.Size * 2;
-        foreach (LinkedList<KeyValuePair<TKey, TValue>> bucket in this.EntryBuckets)
+        this.EntryBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[this.Size];
+
+        foreach (var bucket in oldBuckets)
         {
             if (bucket == null) continue;
-            foreach (KeyValuePair<TKey, TValue> entry in bucket)
+            foreach (var entry in bucket)
             {
-                
+                int modulo = (entry.Key.GetHashCode() & 0x7FFFFFFF) % this.Size;
+                if (EntryBuckets[modulo] == null)
+                {
+                    EntryBuckets[modulo] = new LinkedList<KeyValuePair<TKey, TValue>>();
+                }
+                EntryBuckets[modulo].AddLast(entry);
             }
         }
     }
