@@ -10,10 +10,11 @@ public class MyHashMap<TKey, TValue> where TKey : notnull {
     public int Entries { get; set; }
     public LinkedList<KeyValuePair<TKey, TValue>>[] EntryBuckets { get; set; }
 
-    public MyHashMap ()
+    public MyHashMap()
     {
         EntryBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[16];
         Size = EntryBuckets.Length;
+        Entries = 0;
     }
     
     public void Put(TKey key, TValue value)
@@ -32,11 +33,13 @@ public class MyHashMap<TKey, TValue> where TKey : notnull {
         }
     }
     
-    public TValue Get(TKey key)
-    {
-        int modulo = (key.GetHashCode() & 0x7FFFFFFF) % this.Size;
-
-    }
+    // public TValue Get(TKey key)
+    // {
+    //     int modulo = (key.GetHashCode() & 0x7FFFFFFF) % this.Size;
+    //     Tkey<string> tkey = new Tkey<string>();
+    //     tkey = "nonsense";
+    //     return tkey;
+    // }
     
     public void Remove(TKey key)
     {
