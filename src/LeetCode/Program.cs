@@ -12,6 +12,8 @@ public class Program
     static void Main(string[] args)
     {
         EasyProblem easy = new EasyProblem();
+        int test = 100;
+        easy.FizzBuzz(test);
         Console.WriteLine("First Test:");
         int[] arrayOne = new int[] { 0, 1, 2, 2, 3, 0, 4, 2 };
         var result = TestMemoryUsage<int>(() => easy.RemoveElementBasic(ref arrayOne, 2));

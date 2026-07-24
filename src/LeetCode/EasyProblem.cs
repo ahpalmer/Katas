@@ -8,6 +8,25 @@ public class EasyProblem
     {
     }
 
+    public void FizzBuzz(int n)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            Console.WriteLine(i);
+            if (i % 3 == 0 && i % 5 == 0)
+            {
+                Console.WriteLine("FizzBuzz");
+            }
+            else if (i % 3 == 0)
+            {
+                Console.WriteLine("Fizz");
+            }
+            else if (i % 5 == 0)
+            {
+                Console.WriteLine("Buzz");
+            }
+        }
+    }
     // First do this how you would do it at work, then try to do some funky optimization.
     public int RemoveElementBasic(ref int[] nums, int val)
     {

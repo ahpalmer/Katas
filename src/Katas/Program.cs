@@ -7,7 +7,13 @@ public class Program
     }
     public static void Main(string[] args)
     {
-        RunKyu5();
+        RunKyu3();
+    }
+
+    public static void RunKyu3()
+    {
+        string expression = "Math.Sin(x*0.2)*23";
+        Kyu3.FunctionGrapher(expression);
     }
 
     public static void RunKyu4()

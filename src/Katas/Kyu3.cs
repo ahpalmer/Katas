@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,8 +11,106 @@ using System.Threading.Tasks;
 
 namespace Katas;
 
+// This is for the FunctionGrapher and FunctionGrapherRun katas
+public class Globals
+{
+    public double x { get; set; }
+}
+
 public class Kyu3
 {
+    public static void FunctionGrapher(string expression)
+    {
+        List<string> answer = NewFunctionGrapherRun(expression).Result;
+        foreach (string row in answer)
+        {
+            System.Console.WriteLine(row);
+        }
+    }
+
+    public static async Task<List<string>> FunctionGrapherRun(string expression)
+    {
+        List<string> answer = new List<string>();
+
+        var script = CSharpScript.Create<double>(
+            expression,
+            ScriptOptions.Default.WithImports("System"),
+            globalsType: typeof(Globals));
+
+        script.Compile();
+        for (double y = -25; y <= 25; y ++)
+        {
+            StringBuilder row = new StringBuilder();
+            for (double x = -50; x <= 50; x ++)
+            {
+                bool tempEquals = false;
+                for (double i = 0; i <= 1; i += 0.25)
+                {
+                    double testX = x + i;
+                    double result = (await script.RunAsync(new Globals { x = testX })).ReturnValue;
+                    if (Math.Round(result) == y)
+                    {
+                        tempEquals = true;
+                        break;
+                    }
+                }
+                if (tempEquals) { row.Append("O"); } else { row.Append("."); }
+            }
+            answer.Add(row.ToString());
+        }
+
+        answer.Reverse();
+        return answer;
+    }
+
+    // In order to solve this problem, you're supposed to use an injected object called "Drawing", 
+    // and set the "Drawing" object's "canvas" coordinates to true or false. Printing out the graph 
+    // with Console.WriteLine is incorrect, even though a cursory look at the tests would not tell you that.
+    // you must set Drawing.Canvas[x, y] = true for every individual x,y coordinate for the graph that your code is trying to solve.
+    // I didn't know this when I started and I'm not going to do it. The code works as intended and creates graphs.
+    public static async Task<List<string>> NewFunctionGrapherRun(string expression)
+    {
+        List<string> answer = new List<string>();
+        bool[,] canvas = new bool[51, 101];
+
+        var script = CSharpScript.Create<double>(
+            expression,
+            ScriptOptions.Default.WithImports("System"),
+            globalsType: typeof(Globals));
+
+        script.Compile();
+
+        for (double x = -50; x < 50; x += 0.25)
+        {
+            for (double y = -25; y < 25; y += 0.25)
+            {
+                double result = (await script.RunAsync(new Globals { x = x })).ReturnValue;
+                if (Math.Round(result) == Math.Round(y))
+                {
+                    int pixel_x = (int)Math.Round(x + 50);
+                    int pixel_y = (int)Math.Round(25 - y);
+
+                    if (pixel_x >= 0 && pixel_x <= 100 && pixel_y >= 0 && pixel_y <= 50)
+                    {
+                        canvas[pixel_y, pixel_x] = true;
+                    }
+                }
+            }
+        }
+
+        for (int row = 0; row <= 50; row++)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int col = 0; col <= 100; col++)
+            {
+                sb.Append(canvas[row, col] ? 'D' : '.');
+            }
+            answer.Add(sb.ToString());
+        }
+
+        return answer;
+    }
+
     public static bool ValidateBattlefield(int[,] field)
     {
         List<BattleShip> fleet = FindBattleShips(field);

@@ -33,13 +33,15 @@ public class MyHashMap<TKey, TValue> where TKey : notnull {
         }
     }
     
-    // public TValue Get(TKey key)
-    // {
-    //     int modulo = (key.GetHashCode() & 0x7FFFFFFF) % this.Size;
-    //     Tkey<string> tkey = new Tkey<string>();
-    //     tkey = "nonsense";
-    //     return tkey;
-    // }
+    public TValue Get(TKey key)
+    {
+        int modulo = (key.GetHashCode() & 0x7FFFFFFF) % this.Size;
+        if (EntryBuckets[modulo] == null)
+        {
+            throw new KeyNotFoundException("The given key was not present in the dictionary.");
+        }
+        
+    }
     
     public void Remove(TKey key)
     {
