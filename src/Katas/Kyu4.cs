@@ -2,6 +2,10 @@
 
 namespace Katas
 {
+    public class Knight
+    {
+        
+    }
     public class Kyu4
     {
         public static long NextSmaller(long n)
