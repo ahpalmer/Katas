@@ -19,7 +19,30 @@ internal class Kyu6
 
     public void DoesNothing()
     {
+    }
 
+    public static string HarvesterRescue(int[][] data)
+    {
+        int[] harvester = data[0];
+        int[] worm = data[1];
+        int[] carryall = data[2];
+
+        double wormDistance = Math.Sqrt(Math.Exp(harvester[0] - worm[0]) + Math.Exp(harvester[1] - worm[1]));
+        double carryallDistance = Math.Sqrt(Math.Exp(harvester[0] - carryall[0]) + Math.Exp(harvester[1] - carryall[1]));
+
+        double wormTime = wormDistance / worm[2];
+        double carryallTime = (carryallDistance / carryall[2]) + 1;
+
+        if (wormTime > carryallTime)
+        {
+            System.Console.WriteLine("The spice must flow! Rescue the harvester!");
+            return "The spice must flow! Rescue the harvester!";
+        }
+        else
+        {
+            System.Console.WriteLine("Damn the spice! I'll rescue the miners!");
+            return "Damn the spice! I'll rescue the miners!";
+        }
     }
 
     public int Fruit(List<string[]> reels, int[] spins)

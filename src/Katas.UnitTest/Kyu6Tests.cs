@@ -8,6 +8,17 @@ namespace Katas.UnitTest;
 public class Kyu6Tests
 {
     [TestMethod]
+    public void HarvesterRescueTest()
+    {
+        Kyu6 kyu6 = new Kyu6();
+        int[] harvester = new[] { 345, 600 };
+        int[] worm = new[] { 200, 100, 25 };
+        int[] carryall = new[] { 350, 200, 32 };
+        int[][] data = { harvester, worm, carryall };
+        Assert.AreEqual("The spice must flow! Rescue the harvester!", Kyu6.HarvesterRescue(data));
+    }
+
+    [TestMethod]
     public void FruitTest1()
     {
         Kyu6 kyu6 = new Kyu6();

@@ -1,7 +1,3 @@
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'src'))
-
 from Kyu6.find_nb import find_nb
 
 def test_basic_cases():

@@ -1,7 +1,3 @@
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'src'))
-
 from Kyu6.longest_consecutive import longest_consecutive
 
 def test_longest_consecutive():
