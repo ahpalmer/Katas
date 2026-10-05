@@ -9,6 +9,11 @@ namespace Katas;
 //This class name refers to the codewars KYU system of difficulty.  8 is the least difficult, 1 is the most difficult.
 internal class Kyu8
 {
+    public static bool LoveFunc(int flower1, int flower2)
+    {
+        return ((flower1 % 2 == 0 && flower2 % 2 != 0) || (flower1 %2 != 0 && flower2 %2 == 0));
+    }
+
     public static string boolToWord(bool word)
     {
         if (word) { return "Yes"; }
