@@ -1,0 +1,11 @@
+{
+    "python.analysis.extraPaths": [
+        "./src/PythonKatas/src"
+    ],
+    "python.testing.cwd": "${workspaceFolder}/src/PythonKatas",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

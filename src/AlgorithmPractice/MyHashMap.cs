@@ -40,7 +40,7 @@ public class MyHashMap<TKey, TValue> where TKey : notnull {
         {
             throw new KeyNotFoundException("The given key was not present in the dictionary.");
         }
-        
+        throw new NotImplementedException();
     }
     
     public void Remove(TKey key)

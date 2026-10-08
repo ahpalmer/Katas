@@ -6,6 +6,12 @@ namespace Katas.UnitTest;
 public class Kyu8Tests
 {
     [TestMethod]
+    public void TestLoveFunc()
+    {
+        Assert.AreEqual(true, Kyu8.LoveFunc(1, 4));
+    }
+
+    [TestMethod]
     public void TestEvenOrOdd()
     {
         Kyu8 kyu8 = new Kyu8();
