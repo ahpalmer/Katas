@@ -1,8 +1,8 @@
-name: lss1-mongodb
+name: lss1mongodb
 
 services:
   mongodb:
-    image: mongodb/mongodb-atlas-local:latest
+    image: mongodb/mongodb-atlas-local:8.0
     hostname: mongodb
     ports:
       - "127.0.0.1:27017:27017"

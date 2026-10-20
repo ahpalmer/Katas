@@ -1,0 +1,24 @@
+# Docker Compose file defining volumes for MongoDB service
+# ┌───────────────────────────┬─────────────────────────────────────────────────────┐
+# │ Mapping                   │ Purpose                                             │
+# ├───────────────────────────┼─────────────────────────────────────────────────────┤
+# │  db:/data/db              │ MongoDB’s database files, including your documents. │
+# ├───────────────────────────┼─────────────────────────────────────────────────────┤
+# │  configdb:/data/configdb  │ The image’s configuration storage.                  │
+# ├───────────────────────────┼─────────────────────────────────────────────────────┤
+# │  mongot:/data/mongot      │ Atlas Search’s storage.                             │
+# └───────────────────────────┴─────────────────────────────────────────────────────┘
+services:
+  mongodb:
+    volumes:
+      - db:/data/db
+      - configdb:/data/configdb
+      - mongot:/data/mongot
+      - new:/data/new
+      # Added new volume
+
+volumes:
+  db:
+  configdb:
+  mongot:
+  new:

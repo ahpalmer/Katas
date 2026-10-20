@@ -1,180 +1,153 @@
-# MongoDB + Python kata
+# Local MongoDB kata
 
-Run the database in Docker and the Python program on your Mac. No Atlas
-account, cloud database, or manually entered database queries are needed.
+Python runs on Windows; MongoDB runs in Docker. Dependencies are managed
+with uv, using this project's local `.venv` directory.
 
-## 1. Install and start Docker
+## Start MongoDB
 
-Install [Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/)
-using the **Apple silicon** download for this Mac. Open Docker from Applications,
-complete its setup prompts, and wait until the engine is running. Open a new
-terminal if necessary, then check:
+Run these commands in PowerShell from this directory:
 
-```bash
+```powershell
+uv sync --locked
 docker version
-docker compose version
+docker compose -f compose.local.yaml up -d --wait --wait-timeout 240
 ```
 
-`docker version` must show both a Client and a Server. A missing command means
-the CLI is not installed/on PATH; a connection error usually means Docker
-Desktop is not running.
+The first run downloads the official `mongodb/mongodb-atlas-local:8.0` image.
+Compose waits for its built-in health check. No Atlas account is required.
+MongoDB listens only on `127.0.0.1:27017`, with no authentication. This is for
+local learning only: do not expose it to a network or store sensitive data.
+The `8.0` tag receives updates; pin a tested digest for reproducible image builds.
 
-## 2. Prepare the code
+If Docker is unavailable, install
+[Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/),
+enable its WSL 2 backend and Linux containers, then start Docker Desktop.
+`docker version` must show both Client and Server before running Compose.
+If startup fails, use `docker compose -f compose.local.yaml logs --tail 100 mongodb`.
+If port 27017 is occupied, change the host port in `compose.local.yaml` and pass
+the matching `--uri` to Python.
 
-Python 3.10 or newer is required (this Mac has Python 3.14). Poetry 2 or newer
-manages the dependencies and creates an isolated environment in `.venv`.
-If Poetry is not installed, install it with Homebrew:
+## Insert, query, update, and delete
 
-```bash
-brew install poetry
+```powershell
+uv run main.py insert '{"_id":"task-1","title":"Learn MongoDB","completed":false}'
+uv run main.py query
+uv run main.py query --filter '{"completed":false}'
+uv run main.py update --filter '{"_id":"task-1"}' --set '{"completed":true}'
+uv run main.py query --filter '{"_id":"task-1"}'
+uv run main.py delete --filter '{"_id":"task-1"}'
+uv run main.py query --filter '{"_id":"task-1"}'
 ```
 
-Then install this project's dependencies:
+The final query returns `[]`. The first insert creates the database and collection
+automatically. Omitting `_id` lets MongoDB generate an ObjectId. Output and filters
+support MongoDB Extended JSON, including `{"_id":{"$oid":"..."}}`.
+Update uses `$set`, preserving fields you did not specify. Update and delete
+affect **one** matching document; their counts report when nothing matched.
+Database errors are printed to stderr and exit nonzero.
 
-```bash
-cd /Users/andrewpalmer/PersonalRepos/Katas/AIFueledKatas/LSS1MongoDB
-poetry env use python3
-poetry install
-poetry run python main.py --help
+`database.py` exposes `insert_document`, `query_documents`, `update_document`,
+and `delete_document`. Each takes a PyMongo collection; write methods return
+PyMongo result objects, and queries return a list of dictionaries. Driver errors
+propagate to the caller. For example:
+
+```python
+from pymongo import MongoClient
+from database import Document, insert_document, query_documents
+
+with MongoClient[Document](
+    "mongodb://127.0.0.1:27017/?directConnection=true",
+    serverSelectionTimeoutMS=5_000,
+    timeoutMS=10_000,
+) as client:
+    tasks = client["learning_mongodb"]["tasks"]
+    inserted = insert_document(tasks, {"title": "Practice CRUD", "completed": False})
+    print(query_documents(tasks, {"_id": inserted.inserted_id}))
 ```
 
-In VS Code, run **Python: Select Interpreter** and select this folder's
-`.venv/bin/python`. There is no need to manually activate the environment:
-`poetry run` uses it automatically. Run all commands below from this folder.
+The CLI defaults to database `learning_mongodb` and collection `tasks`.
+Global options go before the command:
 
-[pyproject.toml](./pyproject.toml) declares the dependencies;
-`poetry.lock` records the resolved versions for repeatable installs.
-To add another library later, use `poetry add <package>`.
-
-This project uses Microsoft's approved Python package source,
-`https://packagefeedproxy.microsoft.io/pypi/simple`, configured as the primary
-source in [pyproject.toml](./pyproject.toml). Poetry's implicit public PyPI source
-is disabled; dependencies are resolved through the Microsoft feed.
-
-Read [main.py](./main.py). The PyMongo driver connects to port 27017
-on your Mac, selects the `learning_mongodb` database, then selects a collection
-(roughly comparable to a SQL table). In Python, documents are dictionaries;
-MongoDB generates an `_id` for each inserted task.
-
-## 3. Start MongoDB without named volumes
-
-```bash
-docker compose -f compose.yaml up -d --wait --wait-timeout 180
-poetry run python main.py crud
+```powershell
+uv run main.py --database sandbox --collection notes query
+uv run main.py --uri 'mongodb://127.0.0.1:27017/?directConnection=true' query
 ```
 
-The first startup downloads the official Atlas Local image and can take a few
-minutes. Docker runs it in the background (`-d`); `--wait` waits for the image's
-built-in health check before returning.
+`MONGODB_URI` also overrides the default URI. `uv run main.py --help` lists options.
+uv selects the local environment without manual activation.
+Commit `uv.lock`, but do not commit `.venv` or `__pycache__`.
 
-The program inserts a task, queries it by `_id`, marks it completed with `$set`,
-and deletes it. Assertions verify each result, including that the deleted task
-is no longer queryable. It deliberately leaves no task behind.
+Optional PowerShell activation: `.\.venv\Scripts\Activate.ps1`.
+If script execution is restricted, use `uv run` instead of changing the policy.
 
-Create a separate marker document to use for the persistence experiment:
+## Experiment 1: without named volumes
 
-```bash
-poetry run python main.py seed
-poetry run python main.py list
+The base Compose file does not declare volumes. The image may still create
+anonymous volumes; inspect the actual mounts:
+
+```powershell
+docker inspect lss1mongodb-mongodb-1 --format '{{json .Mounts}}'
+uv run main.py insert '{"_id":"survival-test","title":"Persistence marker"}'
+docker compose -f compose.local.yaml kill mongodb
+docker compose -f compose.local.yaml up -d --wait --wait-timeout 240
+uv run main.py query --filter '{"_id":"survival-test"}'
 ```
 
-`seed` uses an upsert: insert the marker if absent, otherwise keep it unchanged.
-Its original timestamp helps show whether you are reading the same document.
-**Do not run `seed` between a restart/recreation and a verification**, since
-that would recreate a missing marker and hide data loss.
+The marker survives: killing a process does not remove the container or its
+storage. Do not reinsert the marker before checking, since that would hide loss.
 
-## 4. Kill and restart the same container
+Now remove this kata's container **and attached anonymous volumes**, then start
+a fresh container. This intentionally deletes this experiment's data:
 
-Predict the result, then run:
-
-```bash
-docker compose -f compose.yaml kill mongodb
-docker compose -f compose.yaml up -d --wait --wait-timeout 180
-poetry run python main.py verify-present
+```powershell
+docker compose -f compose.local.yaml down -v
+docker compose -f compose.local.yaml up -d --wait --wait-timeout 240
+uv run main.py query --filter '{"_id":"survival-test"}'
 ```
 
-The marker should survive. Killing a container stops its process; it does not
-remove its filesystem or detach its existing storage.
+The query should return `[]`.
 
-Now remove the container **and its attached anonymous volumes**, then create
-a new one:
+## Experiment 2: with named volumes
 
-```bash
-docker compose -f compose.yaml down -v
-docker compose -f compose.yaml up -d --wait --wait-timeout 180
-poetry run python main.py verify-empty
+Remove the empty experimental container, then add the volume override:
+
+```powershell
+docker compose -f compose.local.yaml down -v
+docker compose -f compose.local.yaml -f compose.volumes.yaml up -d --wait --wait-timeout 240
+uv run main.py insert '{"_id":"survival-test","title":"Persistent marker"}'
+docker compose -f compose.local.yaml -f compose.volumes.yaml kill mongodb
+docker compose -f compose.local.yaml -f compose.volumes.yaml up -d --wait --wait-timeout 240
+uv run main.py query --filter '{"_id":"survival-test"}'
+docker compose -f compose.local.yaml -f compose.volumes.yaml down
+docker compose -f compose.local.yaml -f compose.volumes.yaml up -d --wait --wait-timeout 240
+uv run main.py query --filter '{"_id":"survival-test"}'
 ```
 
-This time the marker should be absent. MongoDB images can create anonymous
-volumes even when you did not declare named ones. The `-v` makes removal of
-those attached volumes explicit, rather than leaving orphaned data behind.
-These commands target only this kata's Compose project.
+The marker survives both killing and replacing the container. Named volumes keep
+database files, configuration, and Search data at `/data/db`, `/data/configdb`,
+and `/data/mongot`. Always include both `-f` arguments in this mode.
 
-## 5. Repeat with named volumes
+Stop and remove the container while retaining these volumes:
 
-Remove the empty experimental container first:
-
-```bash
-docker compose -f compose.yaml down -v
-docker compose -f compose.yaml -f compose.persist.yaml up -d --wait --wait-timeout 180
-poetry run python main.py crud
-poetry run python main.py seed
+```powershell
+docker compose -f compose.local.yaml -f compose.volumes.yaml down
 ```
 
-The second Compose file adds named storage for database data, configuration,
-and Atlas Search. Docker manages these volumes separately from the container.
+**Destructive reset:** add `-v` to that command only when you want to delete this
+kata's named volumes and all their data. A volume is not a backup: deleting a
+document also removes it from the database stored in the volume.
 
-Test killing and restarting again:
+## Tests
 
-```bash
-docker compose -f compose.yaml -f compose.persist.yaml kill mongodb
-docker compose -f compose.yaml -f compose.persist.yaml up -d --wait --wait-timeout 180
-poetry run python main.py verify-present
+```powershell
+uv run --locked python -m unittest -v
+$env:MONGODB_INTEGRATION = "1"
+uv run --locked python -m unittest -v
+Remove-Item Env:\MONGODB_INTEGRATION
 ```
 
-Then remove and recreate the container, **keeping the named volumes**:
+Unit tests need no database. The opt-in integration test exercises real CRUD,
+duplicate keys, unchanged and unmatched updates, and missing-document deletion.
+It creates a uniquely named test collection and drops only that collection.
 
-```bash
-docker compose -f compose.yaml -f compose.persist.yaml down
-docker compose -f compose.yaml -f compose.persist.yaml up -d --wait --wait-timeout 180
-poetry run python main.py verify-present
-```
-
-The marker should survive both experiments. Recreating the container attaches
-the same named volumes. Use both `-f` arguments for all persistent-mode commands.
-
-## 6. Stop or reset
-
-Stop and remove the persistent container, but keep your data:
-
-```bash
-docker compose -f compose.yaml -f compose.persist.yaml down
-```
-
-**Destructive reset, only when you want to delete this kata's database:**
-
-```bash
-docker compose -f compose.yaml -f compose.persist.yaml down -v
-```
-
-## Troubleshooting and learning notes
-
-- Inspect startup failures with `docker compose -f compose.yaml logs --tail 100 mongodb`.
-  In persistent mode, include `-f compose.persist.yaml` as well.
-- If port 27017 is already in use, stop the conflicting database or change both
-  the host port in [compose.yaml](./compose.yaml) and the connection URI in
-  [main.py](./main.py).
-- A connection failure exits the program with an error after about 10 seconds.
-  Start the database and wait for healthy status before running code.
-- This database has **no authentication** and is bound to `127.0.0.1` for a
-  local-only exercise. Do not expose it to a network or store sensitive data.
-- The image uses `latest` for this learning exercise. Production environments
-  should pin a tested image version or digest.
-- A volume is not a backup: deleting a document also deletes it from the
-  database stored in that volume.
-- Try changing the task fields, querying by `completed`, and inserting several
-  tasks with `insert_many` once the basic workflow works.
-- Run Python normally, without `-O`, so the exercise's verification assertions
-  remain enabled.
-
-Reference: [MongoDB's official Atlas Local Docker guide](https://www.mongodb.com/docs/atlas/cli/current/atlas-cli-deploy-docker/).
+Reference: [MongoDB's official Atlas Local Compose guide](https://www.mongodb.com/docs/atlas/cli/current/atlas-cli-docker-compose/).

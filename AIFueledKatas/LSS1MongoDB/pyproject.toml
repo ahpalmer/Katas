@@ -1,16 +1,9 @@
 [project]
 name = "lss1-mongodb"
 version = "0.1.0"
-description = "A local MongoDB CRUD and persistence kata"
-requires-python = ">=3.10,<4.0"
+description = "Local MongoDB CRUD and Docker persistence kata"
+readme = "README.md"
+requires-python = ">=3.13"
 dependencies = [
-    "pymongo>=4.15,<5",
+    "pymongo>=4.10,<5",
 ]
-
-[tool.poetry]
-package-mode = false
-
-[[tool.poetry.source]]
-name = "microsoft"
-url = "https://packagefeedproxy.microsoft.io/pypi/simple"
-priority = "primary"
