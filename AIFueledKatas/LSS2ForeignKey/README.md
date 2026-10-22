@@ -5,6 +5,20 @@ users and orders, seed about 1,000 rows, and deliberately violate referential
 integrity. No PostgreSQL installation or SQL client on Windows is needed.
 Here, users are application records, not database login accounts.
 
+## Python project setup
+
+Python runs on Windows and connects to PostgreSQL in Docker using Psycopg 3.
+Dependencies are managed with uv in this project's local `.venv` directory.
+Run all Python commands from this directory:
+
+```powershell
+uv sync --locked
+```
+
+uv creates `.venv` automatically; `uv run` uses it without manual activation.
+Optional PowerShell activation: `.\.venv\Scripts\Activate.ps1`.
+Commit `uv.lock`, but not `.venv` or `__pycache__`.
+
 ## Start Docker Desktop and PostgreSQL
 
 Run these commands in PowerShell from this directory:
@@ -44,6 +58,26 @@ session, set `POSTGRES_PASSWORD` again so Compose can read the configuration,
 but generating a new value does not change an existing database's password.
 The commands below use local socket access inside the container, which the
 official image allows without a password by default.
+
+Python connects over TCP instead, so it needs the database's actual password.
+For the Docker container created by this Compose project, load that password
+into this PowerShell session without printing it or saving it in source code:
+
+```powershell
+$container = docker inspect lss2foreignkey-postgres-1 | ConvertFrom-Json
+$passwordEntry = $container[0].Config.Env | Where-Object { $_ -like 'POSTGRES_PASSWORD=*' }
+if (-not $passwordEntry) { throw 'Container has no POSTGRES_PASSWORD setting.' }
+$env:PGPASSWORD = $passwordEntry.Substring('POSTGRES_PASSWORD='.Length)
+```
+
+Repeat this in new PowerShell sessions before running Python. For another
+PostgreSQL server, supply its password through `PGPASSWORD` or a PostgreSQL
+password file instead. Do not commit credentials.
+
+The Python defaults are host `127.0.0.1`, port `5432`, database
+`learning_postgres`, and user `postgres`. Override them with `PGHOST`, `PGPORT`,
+`PGDATABASE`, and `PGUSER`. If you changed the Docker host port to 5433, set
+`$env:PGPORT = "5433"`.
 
 ## Create the schema
 
@@ -154,6 +188,98 @@ ROLLBACK;
 The counts inside the transaction are **99** and **990**. After `ROLLBACK`,
 the original rows are restored. Explain why deleting the child rows first
 worked, but deleting their parent first failed.
+
+## Insert, query, update, and delete with Python
+
+Create the schema and seed only if this is a fresh database. If they already
+exist, skip those steps. The Python CLI does not recreate or reseed tables.
+Exit psql with `\q` before running these commands in PowerShell:
+
+```powershell
+uv run main.py users query --limit 5
+uv run main.py users query --id 1
+uv run main.py orders query --user-id 1 --limit 10
+uv run main.py users insert --name "Practice User" --email "practice@example.com"
+```
+
+The insert prints the new user's `id`. Capture that ID, rather than assuming
+the next sequence value:
+
+```powershell
+$userId = [long](Read-Host 'User ID returned by the insert')
+uv run main.py users update $userId --name "Updated User" --email "updated-practice@example.com"
+uv run main.py orders insert --user-id $userId --total 12.50
+$orderId = [long](Read-Host 'Order ID returned by the insert')
+uv run main.py orders query --id $orderId
+uv run main.py orders update $orderId --user-id $userId --total 20.00
+```
+
+Now attempt to delete the user while their order exists:
+
+```powershell
+uv run main.py users delete $userId
+```
+
+Expected: an error containing SQLSTATE `23503` and a nonzero exit status.
+Delete the child first, then its parent:
+
+```powershell
+uv run main.py orders delete $orderId
+uv run main.py users delete $userId
+```
+
+Inserts return the complete new row. Queries return JSON arrays, ordered by ID,
+with a default limit of 100; use `--limit` to request more. Updates require all
+editable fields and return `updated` plus the resulting row. A nonexistent
+update returns `updated: false`; a nonexistent delete returns `deleted_count: 0`.
+Deletes affect only the specified ID and never cascade. Money is output as a
+decimal string to preserve precision, and timestamps are ISO 8601 strings.
+
+CLI writes commit only after the operation succeeds; database errors roll back,
+print to stderr, and exit nonzero. Inputs use SQL parameters rather than string
+interpolation. Run `uv run main.py --help` or, for example,
+`uv run main.py orders insert --help` for command options.
+
+`database.py` also exposes `insert_user`, `query_users`, `update_user`,
+`delete_user`, and the corresponding four order functions. They accept a
+Psycopg connection and leave transaction ownership to the caller:
+
+```python
+from decimal import Decimal
+
+import psycopg
+
+from database import insert_order, insert_user
+
+with psycopg.connect(
+    host="127.0.0.1",
+    dbname="learning_postgres",
+    user="postgres",
+    connect_timeout=5,
+) as connection:
+    user = insert_user(connection, "Python User", "python@example.com")
+    order = insert_order(connection, user.id, Decimal("12.50"))
+    print(user, order)
+```
+
+`PGPASSWORD` supplies the password here too. The connection context commits both
+inserts together, or rolls back both if an exception occurs. Constraint errors
+propagate to callers; no function silently ignores them.
+
+## Tests
+
+```powershell
+uv run --locked python -m unittest -v
+$env:POSTGRES_INTEGRATION = "1"
+uv run --locked python -m unittest -v
+Remove-Item Env:\POSTGRES_INTEGRATION
+```
+
+Unit tests need no database. Opt-in integration tests need the same connection
+settings as the CLI. They create uniquely named schemas inside transactions and
+roll everything back on connection close, leaving the kata's tables untouched.
+They cover CRUD, query filters, missing rows, SQL parameterization, foreign-key
+failures, unique emails, and positive order totals.
 
 ## Stop and resume
 
