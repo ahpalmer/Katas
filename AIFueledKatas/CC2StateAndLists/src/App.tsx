@@ -74,6 +74,10 @@ function App() {
     setTodos(todos)
   }
 
+  function reverseCorrectly() {
+    setTodos((current) => current.toReversed())
+  }
+
   return (
     <main>
       <header>
@@ -137,7 +141,7 @@ function App() {
           <button
             type="button"
             disabled={todos.length < 2}
-            onClick={() => setTodos((current) => current.toReversed())}
+            onClick={reverseCorrectly}
           >
             Reverse with a new array
           </button>
